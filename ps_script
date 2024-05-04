@@ -1,0 +1,9 @@
+#!/bin/bash
+# Check if an argument was provided
+if [ -z "$1" ]; then
+    echo "Please specify the number of random numbers to generate."
+    exit 1
+fi
+
+# Generate the specified number of random numbers and launch push_swap
+ARG=`shuf -i 0-20000000 -n $1 | awk '{printf "%d ", $1 - 10000000}'`; ./push_swap $ARG
