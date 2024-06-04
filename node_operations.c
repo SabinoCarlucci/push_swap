@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:28:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/04/25 17:22:33 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:35:20 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ ps_list	*ft_lstnew_bd(void *content)
 	ps_list	*n_node;
 
 	n_node = (ps_list *)malloc(sizeof(ps_list));
+	//n_node = (ps_list *)ft_calloc(1, sizeof(ps_list));
 	if (!n_node)
 		return (NULL);
 	n_node->content = content;
@@ -64,6 +65,20 @@ ps_list	*ft_lstlast_bd(ps_list *lst)
 		if ((current -> next) == NULL)
 			return (current);
 		current = current -> next;
+	}
+	return (current);
+}
+
+ps_list	*ft_lstfirst_bd(ps_list *lst)
+{
+	ps_list	*current;
+
+	current = lst;
+	while (current)
+	{
+		if ((current -> prev) == NULL)
+			return (current);
+		current = current -> prev;
 	}
 	return (current);
 }
