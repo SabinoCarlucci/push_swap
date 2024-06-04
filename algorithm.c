@@ -6,12 +6,12 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/31 19:40:36 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:30:37 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+//ciao
 void	alg_start(ps_list	**stack_a)
 {
 	int	count;
