@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/05 17:53:36 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:10:41 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,14 @@ void    stack_temp(ps_list  *stack_a);
 void	bubble_sort(ps_list  *stack_temp);
 void	index_stack_a(ps_list  *stack_a, ps_list  *stack_temp);
 int	count_stack(ps_list	*stack);
+//utilsII
+int	median_get(int count);
+int	reverse_ordered(ps_list *stack);
 //algorithm
 void	alg_start(ps_list	**stack_a);
-void	alg_sort_small(ps_list	**stack_a, int	count);
-void	alg_sort_medium(ps_list	**stack_a, int	median);
-int	median_get(int count);
+void	alg_sort_three(ps_list	**stack_a, int	count);
+void	alg_sort_five(ps_list	**stack_a, int	median);
+void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median);
+
 
 #endif

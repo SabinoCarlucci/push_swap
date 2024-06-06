@@ -6,7 +6,7 @@
 #    By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 18:31:23 by scarlucc          #+#    #+#              #
-#    Updated: 2024/05/26 18:43:50 by scarlucc         ###   ########.fr        #
+#    Updated: 2024/06/06 17:24:19 by scarlucc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ GREEN = '\033[0;32m'
 NAME = push_swap
 
 SRCS = node_operations.c ps_moves_basic.c ps_moves_advanced_one.c ps_moves_advanced_two.c \
-		main.c checks.c utils.c algorithm.c
+		main.c checks.c utils.c utils_II.c algorithm.c
 
 OBJS = ${SRCS:.c=.o}
 
