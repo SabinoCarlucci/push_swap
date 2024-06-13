@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:14:55 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/31 19:36:47 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:33:58 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_input_repeat(char **argv)
 	return (0);
 }
 
-int	check_num(char *arg)
+int	check_num(char *arg)//controlla se ci metti + o - in mezzo ai numeri
 {
 	int		count;
 	

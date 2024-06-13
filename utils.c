@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:12:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/30 15:04:54 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:35:37 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	bubble_sort(ps_list  *stack_temp)
 			head = head->next;
 		}
 	}
-	printf("STACK_TEMP dopo bubble sort\n");//commenta
-	print_stack(stack_temp);//commenta
-	printf("\n");//commenta
+	//printf("STACK_TEMP dopo bubble sort\n");//cancella prima di consegna
+	//print_stack(stack_temp);//cancella prima di consegna
+	//printf("\n");//cancella prima di consegna
 }
 
 void	index_stack_a(ps_list  *stack_a, ps_list  *stack_temp)//sostituisce i numeri in stackA con indici
@@ -97,7 +97,7 @@ void	index_stack_a(ps_list  *stack_a, ps_list  *stack_temp)//sostituisce i numer
 	}
 }
 
-int	count_stack(ps_list	*stack)
+int	count_stack(ps_list	*stack)//count = numero esatto di nodi
 {
 	ps_list	*current;
 	int		count;

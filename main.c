@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:29:04 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/31 17:58:13 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:37:29 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int	main(int argc, char **argv)
 		exit(1);
 	if (!already_ordered(stack_a))
 	{
-		printf("algoritmo, vieni a me!\n");//chiama algoritmo
+		//printf("algoritmo, vieni a me!\n");//chiama algoritmo
 		stack_temp(stack_a);
 		alg_start(&stack_a);
 	}
-	printf("\nstack_A fine main\n");//togli prima di consegna
-	print_stack(stack_a);//togli prima di consegna
+	//printf("\nstack_A fine main\n");//togli prima di consegna
+	//print_stack(stack_a);//togli prima di consegna
 	free_list(stack_a);
 	stack_a = NULL;
 	return (0);
