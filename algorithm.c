@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/13 18:47:59 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:19:11 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,10 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 m
 
 void	alg_sort_big(ps_list **stack_a, ps_list	*stack_b)
 {
-	ps_list	*current_a;//togli dopo
-	int		position;
-
-	pb(stack_a, &stack_b);
+	pb(stack_a, &stack_b);//magari controllo prima per capire se e' meglio pushare altro
 	pb(stack_a, &stack_b);
 	print_both_stacks(*stack_a, stack_b);//cancella
 	printf("\n\n");//cancella
-	current_a = *stack_a;
-	position = 0;
-	while (current_a)
-	{
-		//trova bersaglio
-		cost_moves(current_a, position);//cancella solo printf, tieni calcolo mosse
-		position++;
-		find_target(current_a->content, stack_b);
-		current_a = current_a->next;
-	}
+	set_target_cost(*stack_a, stack_b);
+	//chiama funzione per fare mossa
 }

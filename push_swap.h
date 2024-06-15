@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/13 18:41:45 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:55:32 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ typedef struct bd_list
 	struct bd_list	*prev;
 	struct bd_list	*next;
 	struct bd_list	*target;
-	int				cost;
-	int				median;	
+	int				cost_up;//se faccio solo rotate
+	int				cost_down;//se faccio solo reverse
+	int				cost_total;
+	int				up_down;//casistica di rotate o reverse o entrambi
 }					ps_list;
 
 ps_list	*ft_lstnew_bd(void *content);
@@ -71,8 +73,9 @@ int	count_stack(ps_list	*stack);
 //utilsII
 int	median_get(int count);
 int	reverse_ordered(ps_list *stack);
-void	cost_moves(ps_list *node, int position);
-void	find_target(int	*a, ps_list *stack_b);
+void	total_cost(ps_list	*stack);
+void	find_target(ps_list	*a, ps_list *stack_target, int position);
+void	set_target_cost(ps_list	*stack, ps_list	*stack_target);
 //algorithm
 void	alg_start(ps_list	**stack_a);
 void	alg_sort_three(ps_list	**stack_a, int	count);

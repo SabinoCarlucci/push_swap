@@ -6,13 +6,13 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/13 18:48:06 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:08:40 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	median_get(int count)
+int	median_get(int count)//mediana = meta' arrotondata per eccesso
 {
 	int		median;
 
@@ -23,6 +23,7 @@ int	median_get(int count)
 	return (median);
 }
 //cambia questa in una funzione che conta quanti nodi consecutivi sono ordinati
+
 int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine inverso)
 {
 	int		check_order;
@@ -32,7 +33,7 @@ int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine
 	current = stack;
 	while (((current->next) != NULL) && check_order)
 	{
-		if (*(current ->content) < *((current ->next) ->content))
+		if (*(current ->content) < *((current ->next)->content))
 			check_order = 0;
 		current = current->next;
 	}
@@ -41,35 +42,180 @@ int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine
 	return (0);
 }
 
-void	find_target(int	*a, ps_list *stack_b)
+void	find_target(ps_list	*a, ps_list *stack_target, int position)
 {
-	ps_list	*current_b;
-	ps_list	*target;
+	ps_list	*current_t;
 
-	current_b = stack_b;
-	target = current_b;
-	while (current_b)
+	current_t = stack_target;
+	a->target = current_t;
+	while (current_t)
 	{
-		if (*a > *(current_b->content)
-			&& ((*a - *(target->content)) < 0
-				|| (*a - *(current_b->content)) < (*a - *(target->content))))
-			target = current_b;
-		current_b = current_b->next;
+		if (*(a->content) > *(current_t->content)
+			&& ((*(a->content) < *(a->target->content))
+				|| (*(a->content) - *(current_t->content))
+				< (*(a->content) - *(a->target->content))))
+			a->target = current_t;
+		current_t = current_t->next;
 	}
-	if (*a < *(target->content))
+	if (*(a->content) < *(a->target->content))
 	{
-		current_b = stack_b;
-		while (current_b)
+		current_t = stack_target;
+		while (current_t)
 		{
-			if (*(current_b->content) > *(target->content))
-				target = current_b;
-			current_b = current_b->next;
+			if (*(current_t->content) > *(a->target->content))
+				a->target = current_t;
+			current_t = current_t->next;
 		}
 	}
-	//printf("t:%d  c:%d", *(target->content), cost_moves(target, ));
+	//cost_single_node(a, position);
+	position = 0;//poi togli se togli position dai parametri
 }
 
-void	cost_moves(ps_list *node, int position)
+void	total_cost(ps_list	*stack)
+{
+	ps_list	*current;
+	int		up;
+	int		down;
+	int		both;
+
+	current = stack;
+	while (current)
+	{
+		if (current->cost_up >= current->target->cost_up)
+			up = current->cost_up;
+		else
+			up = current->target->cost_up;
+		if (current->cost_down >= current->target->cost_down)
+			down = current->cost_down;
+		else
+			down = current->target->cost_down;
+		if ((current->cost_up + current->target->cost_down) >= (current->cost_down + current->target->cost_up))
+		{
+			both = (current->cost_up + current->target->cost_down);
+			current->up_down = 3;
+		}
+		else
+		{
+			both = (current->cost_down + current->target->cost_up);
+			current->up_down = 4;
+		}
+		
+		if (up <= down && up <= both)
+		{
+			current->cost_total = up;
+			current->up_down = 1;
+		}
+		else if (down <= up && down <= both)
+		{
+			current->cost_total = down;
+			current->up_down = 2;
+		}
+		else
+			current->cost_total = both;
+		printf("cont:%d  cup:%d  cdown:%d  target:%d  ctot:%d  upd:%d\n", *(current->content), current->cost_up, current->cost_down, *(current->target)->content, current->cost_total, current->up_down);//cancella
+		current = current->next;
+	}
+}
+
+/* void total_cost(ps_list *stack)
+{
+    ps_list *current;
+    int up;
+    int down;
+    int both;
+
+    current = stack;
+    while (current)
+    {
+        // Determinare il costo up massimo tra nodo corrente e target
+        if (current->cost_up >= current->target->cost_up)
+            up = current->cost_up;
+        else
+            up = current->target->cost_up;
+        
+        // Determinare il costo down massimo tra nodo corrente e target
+        if (current->cost_down >= current->target->cost_down)
+            down = current->cost_down;
+        else
+            down = current->target->cost_down;
+        
+        // Calcolare il costo combinato di up e down
+        if (current->cost_up + current->target->cost_down <= current->cost_down + current->target->cost_up)
+            both = current->cost_up + current->target->cost_down;
+        else
+            both = current->cost_down + current->target->cost_up;
+
+        // Determinare l'opzione con il costo minimo
+        if (up <= down && up <= both)
+        {
+            current->cost_total = up;
+            current->up_down = 1;
+        }
+        else if (down <= up && down <= both)
+        {
+            current->cost_total = down;
+            current->up_down = 2;
+        }
+        else
+        {
+            current->cost_total = both;
+            if (current->cost_up + current->target->cost_down <= current->cost_down + current->target->cost_up)
+                current->up_down = 3;
+            else
+                current->up_down = 4;
+        }
+
+        printf("cont:%d  cup:%d  cdown:%d  target:%d  ctot:%d  upd:%d\n", *(current->content), current->cost_up, current->cost_down, *(current->target->content), current->cost_total, current->up_down);
+        current = current->next;
+    }
+} */
+
+
+void	set_target_cost(ps_list	*stack, ps_list	*stack_target)
+{
+	ps_list	*current;
+	int		cost_up;
+
+	current = stack;
+	cost_up = 0;
+	while (current)
+	{
+		find_target(current, stack_target, cost_up);//forse togliere position tra i parametri
+		current->cost_up = cost_up;
+		current->cost_down = (count_stack(stack) - cost_up);
+		cost_up++;
+		current = current->next;
+	}
+	current = stack_target;
+	cost_up = 0;
+	while (current)
+	{
+		find_target(current, stack, cost_up);//forse togliere position tra i parametri
+		current->cost_up = cost_up;
+		current->cost_down = count_stack(stack_target) - cost_up;
+		cost_up++;
+		current = current->next;
+	}
+	total_cost(stack);
+}
+
+/* void	move(ps_list *stack)//da cambiare
+{
+	int	total_cost;
+
+	total_cost = stack->cost + stack->target->cost;
+	while (stack)
+	{
+		if (total_cost == 0)
+			//fai mossa
+		else
+			
+		total_cost = stack->cost + stack->target->cost;
+		stack = stack->next;
+	}
+} */
+
+/* void	cost_single_node(ps_list *node, int position)//da cambiare completamente
 {
 	int	median;
 	int	n_nodes;
@@ -82,9 +228,14 @@ void	cost_moves(ps_list *node, int position)
 		odd = 1;
 	median = median_get(n_nodes);//cambia
 	if ((position + odd) <= median)
+	{
 		node->cost = position;
+		node->median = 1;//potrebbe cambiare per i numeri pari, controlla dopo
+	}
 	else
+	{
 		node->cost = (position - ((position - median) * 2 + odd));
-	printf("A:%d  ", *(node->content));//cancella
-	printf("c:%d  ", (node->cost));//cancella
-}
+		node->median = 0;
+	}
+	printf("cont:%d  cup:%d  cdown:%d  target:%d\n", *(current->content), current->cost_up, current->cost_down, *(current->target)->content);//cancella
+} */

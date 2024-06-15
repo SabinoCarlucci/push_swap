@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:28:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/13 18:31:22 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:44:34 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ ps_list	*ft_lstnew_bd(void *content)
 	n_node->prev = NULL;
 	n_node->next = NULL;
 	n_node->target = NULL;
-	n_node->cost = NULL;
-	n_node->median = NULL;
+	n_node->cost = 0;
+	n_node->median = 0;
 	return (n_node);
 }
 
