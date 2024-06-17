@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/15 19:08:40 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:40:17 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,15 @@ int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine
 	return (0);
 }
 
-void	find_target(ps_list	*a, ps_list *stack_target, int position)
+void	find_target(ps_list	*a, ps_list *stack_target)
 {
 	ps_list	*current_t;
 
+	/* if (!a || !stack_target) // Verifica se i puntatori non sono NULL
+    {
+		printf("!a || !stack_target\n");//togli
+		return;
+	} */
 	current_t = stack_target;
 	a->target = current_t;
 	while (current_t)
@@ -68,7 +73,7 @@ void	find_target(ps_list	*a, ps_list *stack_target, int position)
 		}
 	}
 	//cost_single_node(a, position);
-	position = 0;//poi togli se togli position dai parametri
+	//position = 0;//poi togli se togli position dai parametri
 }
 
 void	total_cost(ps_list	*stack)
@@ -170,7 +175,6 @@ void	total_cost(ps_list	*stack)
     }
 } */
 
-
 void	set_target_cost(ps_list	*stack, ps_list	*stack_target)
 {
 	ps_list	*current;
@@ -178,9 +182,14 @@ void	set_target_cost(ps_list	*stack, ps_list	*stack_target)
 
 	current = stack;
 	cost_up = 0;
+	/* if (!stack || !stack_target)  // Verifica se i puntatori non sono NULL
+    {
+		printf("!stack || !stack_target  set target cost\n");//togli
+		return;
+	} */
 	while (current)
 	{
-		find_target(current, stack_target, cost_up);//forse togliere position tra i parametri
+		find_target(current, stack_target);//forse togliere position tra i parametri
 		current->cost_up = cost_up;
 		current->cost_down = (count_stack(stack) - cost_up);
 		cost_up++;
@@ -190,13 +199,45 @@ void	set_target_cost(ps_list	*stack, ps_list	*stack_target)
 	cost_up = 0;
 	while (current)
 	{
-		find_target(current, stack, cost_up);//forse togliere position tra i parametri
+		find_target(current, stack);//forse togliere position tra i parametri
 		current->cost_up = cost_up;
 		current->cost_down = count_stack(stack_target) - cost_up;
 		cost_up++;
 		current = current->next;
 	}
 	total_cost(stack);
+}
+
+void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count)
+{
+	int	max;
+	int	step;
+	int	n;
+	int	pushed;
+
+	max = count - 3;
+	step = max / 8;
+	n = 1;
+	pushed = 0;
+	while (count_stack(*stack_a) > 3)
+	{
+		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step))//se nodo e' nello stack, pushalo in b, altrimenti rotate
+		{
+			pb(stack_a, stack_b);
+			pushed++;
+			if (pushed == step)
+			{
+				n += step;
+				pushed = 0;
+			}
+		}
+		else
+			ra(stack_a);
+	}
+	while ((*stack_a)->prev != NULL)
+		*stack_a = (*stack_a)->prev;
+	while ((*stack_b)->prev != NULL)
+		*stack_b = (*stack_b)->prev;
 }
 
 /* void	move(ps_list *stack)//da cambiare

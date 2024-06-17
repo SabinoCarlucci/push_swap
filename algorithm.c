@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/15 16:19:11 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:28:21 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	alg_start(ps_list	**stack_a)
 	else if (count == 5)//aggiungi caso di 4 numeri
 		alg_sort_five(stack_a, stack_b, 3);
 	else
-		alg_sort_big(stack_a, stack_b);
+		alg_sort_big(stack_a, &stack_b, count);
 }
 
 void	alg_sort_three(ps_list	**stack_a, int count)//rinomina con small
@@ -33,13 +33,19 @@ void	alg_sort_three(ps_list	**stack_a, int count)//rinomina con small
 		sa(stack_a);
 	else
 	{
-		if (*((*stack_a)->content) == 1)
+		if ((*((*stack_a)->content) < *((*stack_a)->next->content))
+			&& (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
 			rra(stack_a);
-		else if (*((*stack_a)->content) == 3 && *(((*stack_a)->next)->content) == 2)
+		else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+			&& (*((*stack_a)->next->content)
+				> *((*stack_a)->next->next->content)))
 			sa(stack_a);
-		if (*((*stack_a)->content) == 3)
+		if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+			&& (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
 			ra(stack_a);
-		else if (*((*stack_a)->next->content) == 1)
+		else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
+			&& (*((*stack_a)->next->content)
+				< *((*stack_a)->next->next->content)))
 			sa(stack_a);
 		else
 			rra(stack_a);
@@ -102,12 +108,34 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 m
 }
 
 
-void	alg_sort_big(ps_list **stack_a, ps_list	*stack_b)
+void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
 {
-	pb(stack_a, &stack_b);//magari controllo prima per capire se e' meglio pushare altro
-	pb(stack_a, &stack_b);
-	print_both_stacks(*stack_a, stack_b);//cancella
-	printf("\n\n");//cancella
-	set_target_cost(*stack_a, stack_b);
-	//chiama funzione per fare mossa
+	printf("Before push_chunks\n");
+	if (!stack_a)  // Verifica se i puntatori non sono NULL
+    {
+		printf("!stack_a\n");//togli
+		return;
+	}
+	if (!stack_b)  // Verifica se i puntatori non sono NULL
+    {
+		printf("!stack_b\n");//togli
+		return;
+	}
+    print_both_stacks(*stack_a, *stack_b);
+    
+    push_chunks(stack_a, stack_b, count);
+    
+    printf("After push_chunks\n");
+    print_both_stacks(*stack_a, *stack_b);
+
+	if (!already_ordered(*stack_a))
+		alg_sort_three(stack_a, 3);
+	
+	printf("After alg_sort_three\n");
+    print_both_stacks(*stack_a, *stack_b);
+    //*stack_b = ft_lstfirst_bd(stack_b);
+    set_target_cost(*stack_b, *stack_a);
+    
+    printf("After set_target_cost\n");
+    print_both_stacks(*stack_a, *stack_b);
 }

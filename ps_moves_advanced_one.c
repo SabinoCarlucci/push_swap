@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 23:43:02 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/23 13:42:33 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:14:16 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sa(ps_list **stack_a)
 }
 
 void	sb(ps_list **stack_b)
-{	
+{
 	swap(stack_b);
 	ft_putstr_fd("sb\n", 1);
 }

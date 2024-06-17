@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:12:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/13 16:35:37 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:13:27 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ void    stack_temp(ps_list  *stack_a)//crea stack temporaneo copiando stackA, lo
 		ft_lstadd_back_bd(&stack_temp, ft_lstnew_bd(temp));
 		current = current->next;
 	}
-	printf("STACK_TEMP\n");//commenta
-	print_stack(stack_temp);//commenta
-	printf("\n");//commenta
+	//printf("STACK_TEMP\n");//commenta
+	//print_stack(stack_temp);//commenta
+	//printf("\n");//commenta
 	bubble_sort(stack_temp);
 	index_stack_a(stack_a, stack_temp);
 	free_list(stack_temp);
 	stack_temp = NULL;
 }
+
 void	bubble_sort(ps_list  *stack_temp)
 {
 	int	temp;
