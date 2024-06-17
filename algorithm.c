@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/17 10:28:21 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:06:52 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,32 +110,36 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 m
 
 void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
 {
-	printf("Before push_chunks\n");
-	if (!stack_a)  // Verifica se i puntatori non sono NULL
-    {
-		printf("!stack_a\n");//togli
-		return;
-	}
-	if (!stack_b)  // Verifica se i puntatori non sono NULL
-    {
-		printf("!stack_b\n");//togli
-		return;
-	}
-    print_both_stacks(*stack_a, *stack_b);
+    //print_both_stacks(*stack_a, *stack_b);
     
     push_chunks(stack_a, stack_b, count);
     
-    printf("After push_chunks\n");
-    print_both_stacks(*stack_a, *stack_b);
+    /* printf("After push_chunks\n");
+    print_both_stacks(*stack_a, *stack_b); */
 
 	if (!already_ordered(*stack_a))
 		alg_sort_three(stack_a, 3);
 	
-	printf("After alg_sort_three\n");
-    print_both_stacks(*stack_a, *stack_b);
-    //*stack_b = ft_lstfirst_bd(stack_b);
-    set_target_cost(*stack_b, *stack_a);
-    
-    printf("After set_target_cost\n");
-    print_both_stacks(*stack_a, *stack_b);
+	/* printf("After alg_sort_three\n");
+    print_both_stacks(*stack_a, *stack_b); */
+
+	int stack_size_st = count_stack(*stack_b);
+	int stack_size_tar = count_stack(*stack_a);
+
+    while (stack_b)
+	{
+		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
+    	make_move(stack_b, stack_a);
+		/* printf("dentro ciclo\n");
+		print_both_stacks(*stack_a, *stack_b); */
+		/* while ((*stack_a)->prev != NULL)//queste 4 righe forse vanno altrove, forse non servono piu'
+			*stack_a = (*stack_a)->prev;
+		while ((*stack_b)->prev != NULL)
+			*stack_b = (*stack_b)->prev; */
+	}	
+	
+    /* printf("After ciclo\n");
+    print_both_stacks(*stack_a, *stack_b); */
+
+	
 }
