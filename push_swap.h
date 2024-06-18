@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/17 19:08:15 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:12:26 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,9 @@ int	median_get(int count);
 int	reverse_ordered(ps_list *stack);
 void	total_cost(ps_list	*stack);
 void	find_target(ps_list	*a, ps_list *stack_target);
-void	set_target_cost(ps_list	*stack, ps_list	*stack_target, int stack_size_st, int stack_size_tar);
+int	set_target_cost(ps_list	*stack, ps_list	*stack_target, int stack_size_st, int stack_size_tar);
 void	make_move(ps_list **stack_start, ps_list **stack_targ);
-void	bring_to_top(ps_list *node, ps_list **stack_start, ps_list **stack_targ);
-void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves);
-void	move_down(ps_list *node, ps_list **list1, ps_list **list2, int double_moves);
-void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2);
-void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2);
-
-
-
+void	last_fix(ps_list **stack_a, int count);
 //algorithm
 void	alg_start(ps_list	**stack_a);
 void	alg_sort_three(ps_list	**stack_a, int	count);
@@ -92,6 +85,12 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median);
 void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median);
 void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count);
 void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count);
+//bring_to_top
+void	bring_to_top(ps_list *node, ps_list **stack_start, ps_list **stack_targ);
+void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves);
+void	move_down(ps_list *node, ps_list **list1, ps_list **list2, int double_moves);
+void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2);
+void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2);
 
 
 #endif

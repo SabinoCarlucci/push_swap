@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/17 19:07:41 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:53:25 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,32 +115,35 @@ void	total_cost(ps_list	*stack)
 	}
 }
 
-void	set_target_cost(ps_list	*stack, ps_list	*stack_target, int stack_size_st, int stack_size_tar)
+int	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st, int stack_size_tar)
 {
 	ps_list	*current;
 	int		cost_up;
 
-	current = stack;
+	current = stack_st;
 	cost_up = 0;
-	while (current)
+	while (current)//mettere in altra funzione e richiamare due volte
 	{
-		find_target(current, stack_target);//forse togliere position tra i parametri
+		find_target(current, stack_target);
 		current->cost_up = cost_up;
 		current->cost_down = (stack_size_st - cost_up);
 		cost_up++;
 		current = current->next;
 	}
+	if (stack_size_st == 0)
+		return (1);
 	current = stack_target;
 	cost_up = 0;
 	while (current)
 	{
-		find_target(current, stack);//forse togliere position tra i parametri
+		find_target(current, stack_st);
 		current->cost_up = cost_up;
 		current->cost_down = stack_size_tar - cost_up;
 		cost_up++;
 		current = current->next;
 	}
-	total_cost(stack);
+	total_cost(stack_st);
+	return (0);
 }
 
 void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count)
@@ -148,32 +151,32 @@ void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count)
 	int	max;
 	int	step;
 	int	n;
-	int	pushed;
 
 	max = count - 3;
-	step = max / 8;
-	n = 1;
-	pushed = 0;
-	while (count_stack(*stack_a) > 3)
+	step = max / 8;//fai numero chunks variabile
+	n = 1;//non uno ma resto di divisione
+	while (count > 3)
 	{
-		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step) && *((*stack_a)->content) <= max)//se nodo e' nello stack, pushalo in b, altrimenti rotate
+		if (*((*stack_a)->content) > max)
+			ra(stack_a);
+		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step))//se nodo e' nello stack, pushalo in b, altrimenti rotate
 		{
 			pb(stack_a, stack_b);
-			pushed++;
-			if (pushed == step)
-			{
+				count--;
+			if ((count - 3 - (max % 8)) % step == 0)
 				n += step;
-				pushed = 0;
-			}
-		}
+		}//prima di questo metti else if numero e' in fondo a stack, fai rra e poi push
 		else
 			ra(stack_a);
 	}
-	while ((*stack_a)->prev != NULL)//queste 4 righe forse vanno altrove, forse non servono piu'
-		*stack_a = (*stack_a)->prev;
-	while ((*stack_b)->prev != NULL)
-		*stack_b = (*stack_b)->prev;
 }
+
+/* int	size_chunks(int	count)
+{
+	int	max;
+	max = count -3;
+
+} */
 
 void	make_move(ps_list **stack_start, ps_list **stack_targ)
 {
@@ -192,120 +195,27 @@ void	make_move(ps_list **stack_start, ps_list **stack_targ)
 	pa(stack_start, stack_targ);
 }
 
-void	bring_to_top(ps_list *node, ps_list **stack_start, ps_list **stack_targ)
+void	last_fix(ps_list **stack_a, int count)
 {
-	int	double_moves;
-
-	if (node->up_down == 1)
+	ps_list	*current;
+	int		consecutives;
+	
+	consecutives = 0;
+	current = *stack_a;
+	while (current->content == current->next->content - 1)
 	{
-		if (node->cost_up > node->target->cost_up)
-			double_moves = node->target->cost_up;
-		else
-			double_moves = node->cost_up;
-		move_up(node, stack_start, stack_targ, double_moves);
+		consecutives++;
+		current = current->next;
 	}
-	else if (node->up_down == 2)
+	if (consecutives > (count - consecutives))
 	{
-		//return;
-		if (node->cost_down > node->target->cost_down)
-			double_moves = node->target->cost_down;
-		else
-			double_moves = node->cost_down;
-		move_down(node, stack_start, stack_targ, double_moves);
+		while (consecutives-- > 0)
+			rra(stack_a);
 	}
-	else if (node->up_down == 3)
-		//return;
-		move_up_down(node->cost_up, node->target->cost_down, stack_start, stack_targ);
 	else
-		//return;
-		move_down_up(node->cost_down, node->target->cost_up, stack_start, stack_targ);
-}
-
-void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
-{
-	int	single_moves;
-	int	count;
-
-	count = 0;
-	if (node->cost_up > double_moves)
-		single_moves = node->cost_up  - double_moves;
-	else
-		single_moves = node->target->cost_up - double_moves;
-	while (count < single_moves)
 	{
-		if (node->cost_up > double_moves)
-			rb(list1);
-		else
-			ra(list2);
-		count++;
-	}
-	count = 0;
-	while (count < double_moves)
-	{
-		rr(list1, list2);
-		count++;
-	}
-}
-
-void	move_down(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
-{
-	int	single_moves;
-	int	count;
-
-	count = 0;
-	if (node->cost_down > double_moves)
-		single_moves = node->cost_down  - double_moves;
-	else
-		single_moves = node->target->cost_down - double_moves;
-	while (count < single_moves)
-	{
-		if (node->cost_down > double_moves)
-			rrb(list1);
-		else
-			rra(list2);
-		count++;
-	}
-	count = 0;
-	while (count < double_moves)
-	{
-		rrr(list1, list2);
-		count++;
-	}
-}
-
-void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2)
-{
-	int	moves;
-
-	moves = 0;
-	while (moves < up_moves)
-	{
-		rb(list1);
-		moves++;
-	}
-	moves = 0;
-	while (moves < down_moves)
-	{
-		rra(list2);
-		moves++;
-	}
-}
-
-void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2)
-{
-	int	moves;
-
-	moves = 0;
-	while (moves < down_moves)
-	{
-		rrb(list1);
-		moves++;
-	}
-	moves = 0;
-	while (moves < up_moves)
-	{
-		ra(list2);
-		moves++;
+		while (consecutives-- > 0)
+			ra(stack_a);
 	}
 }
 

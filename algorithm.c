@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/17 19:06:52 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:38:48 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
 {
     //print_both_stacks(*stack_a, *stack_b);
     
+	//mettere puntatori singoli
+	
     push_chunks(stack_a, stack_b, count);
     
     /* printf("After push_chunks\n");
@@ -128,15 +130,18 @@ void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
 
     while (stack_b)
 	{
-		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
-    	make_move(stack_b, stack_a);
+		if (!set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++))
+    		make_move(stack_b, stack_a);
 		/* printf("dentro ciclo\n");
 		print_both_stacks(*stack_a, *stack_b); */
 		/* while ((*stack_a)->prev != NULL)//queste 4 righe forse vanno altrove, forse non servono piu'
 			*stack_a = (*stack_a)->prev;
 		while ((*stack_b)->prev != NULL)
 			*stack_b = (*stack_b)->prev; */
-	}	
+	}
+	printf("hello");
+	if (!already_ordered(*stack_a))//0 se non ordinata, 1 se ordinata
+		last_fix(stack_a, count);
 	
     /* printf("After ciclo\n");
     print_both_stacks(*stack_a, *stack_b); */
