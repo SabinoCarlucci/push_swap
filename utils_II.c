@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/18 13:53:25 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:10:37 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	find_target(ps_list	*a, ps_list *stack_target)
 			a->target = current_t;
 		current_t = current_t->next;
 	}
-	if (*(a->content) > *(a->target->content))
+	/* if (*(a->content) > *(a->target->content))//questa parte non dovrebbe essere necessaria
 	{
 		current_t = stack_target;
 		while (current_t)
@@ -66,7 +66,7 @@ void	find_target(ps_list	*a, ps_list *stack_target)
 				a->target = current_t;
 			current_t = current_t->next;
 		}
-	}
+	} */
 }
 
 void	total_cost(ps_list	*stack)
@@ -115,13 +115,25 @@ void	total_cost(ps_list	*stack)
 	}
 }
 
-int	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st, int stack_size_tar)
+void	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st, int stack_size_tar)//forse cambiare di nuovo da int a void
 {
 	ps_list	*current;
 	int		cost_up;
+	//int a = 0;//togli
 
+	current = stack_target;
+	cost_up = 0;
+	while (current)
+	{
+		//find_target(current, stack_st);
+		current->cost_up = cost_up;
+		current->cost_down = stack_size_tar - cost_up;
+		cost_up++;
+		current = current->next;
+	}
 	current = stack_st;
 	cost_up = 0;
+	//printf("(%d)", a++);//togli
 	while (current)//mettere in altra funzione e richiamare due volte
 	{
 		find_target(current, stack_target);
@@ -130,52 +142,78 @@ int	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st,
 		cost_up++;
 		current = current->next;
 	}
-	if (stack_size_st == 0)
-		return (1);
-	current = stack_target;
-	cost_up = 0;
-	while (current)
-	{
-		find_target(current, stack_st);
-		current->cost_up = cost_up;
-		current->cost_down = stack_size_tar - cost_up;
-		cost_up++;
-		current = current->next;
-	}
+	/* if (stack_size_st == 0)
+		return (1); */
 	total_cost(stack_st);
-	return (0);
+	//return (0);
 }
 
 void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count)
 {
 	int	max;
 	int	step;
+	int	left_in_a;
 	int	n;
 
-	max = count - 3;
-	step = max / 8;//fai numero chunks variabile
-	n = 1;//non uno ma resto di divisione
-	while (count > 3)
-	{
-		if (*((*stack_a)->content) > max)
-			ra(stack_a);
+	//step = size_chunks(count);
+	step = make_chunks(count);
+	n = 1;//cambia nome se riesci a scrivere condizione grssa su due righe
+	if ((count % step) > 3)
+		left_in_a = 3;
+	else
+		left_in_a = count % step;
+	max = count - left_in_a;
+	
+	//int a = 0;//togli
+	
+	while (count > left_in_a)//mettere altra condizione per evitare loop infinito?
+	{			
 		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step))//se nodo e' nello stack, pushalo in b, altrimenti rotate
 		{
 			pb(stack_a, stack_b);
-				count--;
-			if ((count - 3 - (max % 8)) % step == 0)
+			count--;
+			/* if ((max - (n + step + step)) < step)//problema qui
+				n += (max - (n + step + step)); */
+			if ((count - left_in_a) % step == 0)
 				n += step;
+			/* if ((count - (max % step)) % step == 0)//con 7 numeri da problemi
+				n += step; */
+			/* if ((max - (n + step)) < step)
+				n += (max - (n + step + step));//la differenza tra il massimo e il numero esatto 
+			if ((count - 3 - (max % step)) % step == 0)
+				n += step; */
 		}//prima di questo metti else if numero e' in fondo a stack, fai rra e poi push
-		else
+		else /* (*((*stack_a)->content) > max) */
+		{
+			//printf("(%d)", a++);//togli
 			ra(stack_a);
+		}
 	}
+}
+
+int	make_chunks(int	count)
+{
+	int	size_chunk;
+
+	size_chunk = 3;
+	while (size_chunk <= 20 && (count / size_chunk) >= size_chunk)
+		size_chunk++;
+	return (size_chunk);
 }
 
 /* int	size_chunks(int	count)
 {
-	int	max;
-	max = count -3;
-
+	//minimo 3 elementi per chunk
+	//massimo 12 chunk
+	int	size_chunk;
+	
+	if (count <=7)
+		size_chunk = 4;
+	else if (count <= 100)
+		size_chunk = 12;
+	else
+		size_chunk = 20;
+	return (size_chunk);
 } */
 
 void	make_move(ps_list **stack_start, ps_list **stack_targ)
@@ -199,10 +237,11 @@ void	last_fix(ps_list **stack_a, int count)
 {
 	ps_list	*current;
 	int		consecutives;
+	//int a = 0;
 	
-	consecutives = 0;
+	consecutives = 1;
 	current = *stack_a;
-	while (current->content == current->next->content - 1)
+	while (*(current)->content == (*(current)->next->content - 1))
 	{
 		consecutives++;
 		current = current->next;
@@ -215,7 +254,11 @@ void	last_fix(ps_list **stack_a, int count)
 	else
 	{
 		while (consecutives-- > 0)
+		{
+			//printf("(%d)", a++);//togli
 			ra(stack_a);
+		}
+			
 	}
 }
 

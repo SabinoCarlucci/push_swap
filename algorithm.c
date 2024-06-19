@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/18 11:38:48 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:14:14 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	alg_sort_three(ps_list	**stack_a, int count)//rinomina con small
 	}//qui chiama algoritmo per 5
 }
 
-void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median)
+void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median)//non funziona piu!!!!
 {
 	if (*(ft_lstlast_bd(*stack_a))->content == 1)
 		rra(stack_a);
@@ -109,42 +109,24 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 m
 
 
 void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
-{
-    //print_both_stacks(*stack_a, *stack_b);
-    
-	//mettere puntatori singoli
-	
+{	
     push_chunks(stack_a, stack_b, count);
-    
-    /* printf("After push_chunks\n");
-    print_both_stacks(*stack_a, *stack_b); */
 
-	if (!already_ordered(*stack_a))
+	if (!already_ordered(*stack_a))//capita che ci siano meno di 3 elementi non ordinati? se si, correggi
 		alg_sort_three(stack_a, 3);
-	
-	/* printf("After alg_sort_three\n");
-    print_both_stacks(*stack_a, *stack_b); */
 
 	int stack_size_st = count_stack(*stack_b);
 	int stack_size_tar = count_stack(*stack_a);
-
-    while (stack_b)
+	//int a = 0;
+    while (*stack_b && (*stack_b)->content)//aggiunto * davanti primo stack_b
 	{
-		if (!set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++))
-    		make_move(stack_b, stack_a);
-		/* printf("dentro ciclo\n");
-		print_both_stacks(*stack_a, *stack_b); */
-		/* while ((*stack_a)->prev != NULL)//queste 4 righe forse vanno altrove, forse non servono piu'
-			*stack_a = (*stack_a)->prev;
-		while ((*stack_b)->prev != NULL)
-			*stack_b = (*stack_b)->prev; */
+		//printf("(%d %d)", *(*stack_b)->content, a++);
+		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
+    	make_move(stack_b, stack_a);
+		/* else
+			break; */
 	}
-	printf("hello");
+	//printf("hello");
 	if (!already_ordered(*stack_a))//0 se non ordinata, 1 se ordinata
 		last_fix(stack_a, count);
-	
-    /* printf("After ciclo\n");
-    print_both_stacks(*stack_a, *stack_b); */
-
-	
 }

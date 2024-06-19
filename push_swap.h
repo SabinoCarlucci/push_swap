@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/18 11:12:26 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:48:45 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ int	median_get(int count);
 int	reverse_ordered(ps_list *stack);
 void	total_cost(ps_list	*stack);
 void	find_target(ps_list	*a, ps_list *stack_target);
-int	set_target_cost(ps_list	*stack, ps_list	*stack_target, int stack_size_st, int stack_size_tar);
+void	set_target_cost(ps_list	*stack, ps_list	*stack_target, int stack_size_st, int stack_size_tar);
 void	make_move(ps_list **stack_start, ps_list **stack_targ);
 void	last_fix(ps_list **stack_a, int count);
+int	size_chunks(int	count);
+int	make_chunks(int	count);
 //algorithm
 void	alg_start(ps_list	**stack_a);
 void	alg_sort_three(ps_list	**stack_a, int	count);

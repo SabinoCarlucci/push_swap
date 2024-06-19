@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:52:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/18 09:52:47 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:20:26 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
 {
 	int	single_moves;
 	int	count;
+	//int a = 0;//togli
 
 	count = 0;
 	if (node->cost_up > double_moves)
@@ -53,7 +54,11 @@ void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
 		if (node->cost_up > double_moves)
 			rb(list1);
 		else
+		{
+			//printf("(%d)", a++);//togli
 			ra(list2);
+		}
+			
 		count++;
 	}
 	count = 0;
@@ -111,6 +116,7 @@ void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2
 void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2)
 {
 	int	moves;
+	//int a = 0;//togli
 
 	moves = 0;
 	while (moves < down_moves)
@@ -121,6 +127,7 @@ void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2
 	moves = 0;
 	while (moves < up_moves)
 	{
+		//printf("(%d)", a++);//togli
 		ra(list2);
 		moves++;
 	}
