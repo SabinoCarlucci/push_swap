@@ -6,13 +6,13 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:29:04 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/11 15:37:29 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:52:46 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-ps_list	*make_lst_from_ints(int argc, char **argv, ps_list *stack_a)
+t_ps_list	*make_lst_from_ints(int argc, char **argv, t_ps_list *stack_a)
 {
 	int	count;
 	int	*node;
@@ -24,13 +24,13 @@ ps_list	*make_lst_from_ints(int argc, char **argv, ps_list *stack_a)
 	{
 		node = (int *)ft_calloc(1, sizeof(int));
 		*node = ft_atoi(argv[count]);
-		ft_lstadd_back_bd(&stack_a, ft_lstnew_bd(node));
+		ft_lstadd_back_dl(&stack_a, ft_lstnew_dl(node));
 		count++;
 	}
 	return (stack_a);
 }
 
-ps_list	*make_lst_from_string(char **argv, ps_list *stack_a)
+t_ps_list	*make_lst_from_string(char **argv, t_ps_list *stack_a)
 {
 	char	**split_out;
 	int		count;
@@ -49,7 +49,7 @@ ps_list	*make_lst_from_string(char **argv, ps_list *stack_a)
 
 int	main(int argc, char **argv)
 {
-	ps_list	*stack_a;
+	t_ps_list	*stack_a;
 
 	stack_a = NULL;
 	if (argc == 1)
@@ -95,7 +95,7 @@ int	main(int argc, char **argv)
 	print_list(stack_b);
 
 	ss(&stack_a, &stack_b);
-	printf("\nstack A\n");
+	printf("\nstack A\n");double_moves
 	print_list(stack_a);
 	printf("\nstack B\n");
 	print_list(stack_b);

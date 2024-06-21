@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:14:55 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/18 10:24:03 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int	check_limits_int(char *arg)
 	return (0);
 }
 
-int	already_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata
+int	already_ordered(t_ps_list *stack)//0 se non ordinata, 1 se ordinata
 {
 	int		check_order;
-	ps_list	*current;
+	t_ps_list	*current;
 
 	check_order = 1;
 	current = stack;
@@ -106,7 +106,7 @@ int	error_message(void)
 	return (1);
 }
 
-void	print_list(ps_list *stack)//commenta prima di consegnare, anche in .h
+void	print_list(t_ps_list *stack)//commenta prima di consegnare, anche in .h
 {
 	while (stack)
 	{
@@ -124,9 +124,9 @@ void	print_list(ps_list *stack)//commenta prima di consegnare, anche in .h
 	}
 }
 
-void	print_stack(ps_list *stack)//commenta prima di consegnare, anche in .h
+void	print_stack(t_ps_list *stack)//commenta prima di consegnare, anche in .h
 {
-	//stack = ft_lstfirst_bd(stack);
+	//stack = ft_lstfirst_dl(stack);
 	while (stack)
 	{
 		printf("%i \n", *(stack->content));
@@ -134,7 +134,7 @@ void	print_stack(ps_list *stack)//commenta prima di consegnare, anche in .h
 	}
 }
 
-void	print_both_stacks(ps_list *stack_a, ps_list *stack_b)//commenta prima di consegnare, anche in .h
+void	print_both_stacks(t_ps_list *stack_a, t_ps_list *stack_b)//commenta prima di consegnare, anche in .h
 {
 	printf("AAA     BBB\n");
 	while (stack_a || stack_b)
@@ -155,7 +155,7 @@ void	print_both_stacks(ps_list *stack_a, ps_list *stack_b)//commenta prima di co
 	}
 }
 
-ps_list	*make_lst_from_array(int	*array, int size, ps_list *stack_a)//non la uso, cancellare prima di consegnare, anche da .h
+t_ps_list	*make_lst_from_array(int	*array, int size, t_ps_list *stack_a)//non la uso, cancellare prima di consegnare, anche da .h
 {
 	int *node;
 	int	count;
@@ -165,7 +165,7 @@ ps_list	*make_lst_from_array(int	*array, int size, ps_list *stack_a)//non la uso
 	{
 		node = (int *)ft_calloc(1, sizeof(int));
 		*node = array[count];
-		ft_lstadd_back_bd(&stack_a, ft_lstnew_bd(node));
+		ft_lstadd_back_dl(&stack_a, ft_lstnew_dl(node));
 		count++;
 	}
 	//free(node);//non sono sicuro di doverlo togliere, ma se va tolto, allora va gestito nella lista

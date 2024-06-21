@@ -6,58 +6,100 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/19 19:14:14 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:02:51 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	alg_start(ps_list	**stack_a)
+void	alg_start(t_ps_list	**stack_a)
 {
 	int	count;
-	ps_list	*stack_b;
+	t_ps_list	**stack_b;
 
-	stack_b = NULL;
+	stack_b = (t_ps_list **)malloc(sizeof(t_ps_list *));
+    if (stack_b)
+		*stack_b = NULL;
 	count = count_stack(*stack_a);
-	if (count < 4)
-		alg_sort_three(stack_a, count);
-	else if (count == 5)//aggiungi caso di 4 numeri
-		alg_sort_five(stack_a, stack_b, 3);
-	else
-		alg_sort_big(stack_a, &stack_b, count);
-}
-
-void	alg_sort_three(ps_list	**stack_a, int count)//rinomina con small
-{
 	if (count == 2)
 		sa(stack_a);
+	else if (count < 4)
+		alg_sort_one_to_three(stack_a, stack_b);
+	/* else if (count == 5)//aggiungi caso di 4 numeri
+		alg_sort_five(stack_a, stack_b, 3); */
 	else
-	{
-		if ((*((*stack_a)->content) < *((*stack_a)->next->content))
-			&& (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
-			rra(stack_a);
-		else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
-			&& (*((*stack_a)->next->content)
-				> *((*stack_a)->next->next->content)))
-			sa(stack_a);
-		if ((*((*stack_a)->content) > *((*stack_a)->next->content))
-			&& (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
-			ra(stack_a);
-		else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
-			&& (*((*stack_a)->next->content)
-				< *((*stack_a)->next->next->content)))
-			sa(stack_a);
-		else
-			rra(stack_a);
-	}//qui chiama algoritmo per 5
+		alg_sort_big(stack_a, stack_b, count);
+	free(stack_b);
 }
 
-void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median)//non funziona piu!!!!
+void	alg_sort_one_to_three(t_ps_list	**stack_a, t_ps_list	**stack_b)
 {
-	if (*(ft_lstlast_bd(*stack_a))->content == 1)
+	if ((*((*stack_a)->content) < *((*stack_a)->next->content))
+		&& (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
+		rra(stack_a);
+	else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+		&& (*((*stack_a)->next->content)
+			> *((*stack_a)->next->next->content)))
+	{
+		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
+			ss(stack_a, stack_b);
+		else
+			sa(stack_a);
+	}
+	if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+		&& (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
+		ra(stack_a);
+	else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
+		&& (*((*stack_a)->next->content)
+			< *((*stack_a)->next->next->content)))
+	{
+		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
+				ss(stack_a, stack_b);
+		else
+			sa(stack_a);
+	}
+	else
+		rra(stack_a);
+}
+
+void	alg_sort_big(t_ps_list **stack_a, t_ps_list	**stack_b, int count)
+{	
+	int stack_size_st;
+	int stack_size_tar;
+
+	//push_chunks(stack_a, stack_b, count);
+	push_chunks2(stack_a, stack_b, count);
+	stack_size_st = count_stack(*stack_b);
+	stack_size_tar = count_stack(*stack_a);
+	if (!already_ordered(*stack_a) && stack_size_tar > 1)
+	{
+		if (stack_size_tar == 2)
+			sa(stack_a);
+		else
+			alg_sort_one_to_three(stack_a, stack_b);
+	}
+	//int a = 0;
+    while (*stack_b && (*stack_b)->content)//aggiunto * davanti primo stack_b
+	{
+		//printf("(%d %d)", *(*stack_b)->content, a++);
+		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
+    	make_move(stack_b, stack_a);
+	}
+	//printf("hello");
+	if (!already_ordered(*stack_a))//0 se non ordinata, 1 se ordinata
+		last_fix(stack_a, count);
+}
+
+/* void	sort_five_start(t_ps_list **stack_a, t_ps_list **stack_b, int median)//non funziona piu!!!!
+{
+	if (*(ft_lstlast_dl(*stack_a))->content == 1)
 		rra(stack_a);
 	if (*((*stack_a)->content) < median)
-		pb(stack_a, stack_b);//altro if che forse fa swap
+	{
+		if (*((*stack_a)->content) > *((*stack_a)->next->content))
+			sa(stack_a);
+		pb(stack_a, stack_b);
+	}	
 	else
 	{
 		if (*((*stack_a)->content) > *((*stack_a)->next->content))
@@ -66,9 +108,14 @@ void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median)//non funz
 			{
 				if (*stack_b && !reverse_ordered(*stack_b))//provocava segfault con numeri 5 4 3 1 2 perche' stack_b era vuota, ora fa 9 mosse
 					ss(stack_a, stack_b);
-				else if (*(ft_lstlast_bd(*stack_a)->content) == 2)//con 5 4 3 1 2 fa 9 mosse invece di 8, ancora non capisco perche'
+				else if (*(ft_lstlast_dl(*stack_a)->content) == 2)//con 5 4 3 1 2 fa 9 mosse invece di 8, ancora non capisco perche'
 				{
 					rra(stack_a);
+					if (*(ft_lstlast_dl(*stack_a)->content) == 1)
+					{
+						rra (stack_a);
+						pb(stack_a, stack_b);
+					}
 					pb(stack_a, stack_b);
 				}
 				else
@@ -79,7 +126,7 @@ void	sort_five_start(ps_list **stack_a, ps_list **stack_b, int median)//non funz
 	}
 }
 
-void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 mosse e caso di 10!!! e accorcia funzione
+void	alg_sort_five(t_ps_list	**stack_a, t_ps_list	*stack_b, int	median)//caso di 9 mosse e caso di 10!!! e accorcia funzione
 {
 	while (count_stack(stack_b) < 2)
 		sort_five_start(stack_a, &stack_b, median);
@@ -103,30 +150,8 @@ void	alg_sort_five(ps_list	**stack_a, ps_list	*stack_b, int	median)//caso di 9 m
 			sa(stack_a);
 		ra(stack_a);
 	}
+	if (!already_ordered(*stack_a))
+		sa(stack_a);
 	while (stack_b)
 		pa(&stack_b, stack_a);
-}
-
-
-void	alg_sort_big(ps_list **stack_a, ps_list	**stack_b, int count)
-{	
-    push_chunks(stack_a, stack_b, count);
-
-	if (!already_ordered(*stack_a))//capita che ci siano meno di 3 elementi non ordinati? se si, correggi
-		alg_sort_three(stack_a, 3);
-
-	int stack_size_st = count_stack(*stack_b);
-	int stack_size_tar = count_stack(*stack_a);
-	//int a = 0;
-    while (*stack_b && (*stack_b)->content)//aggiunto * davanti primo stack_b
-	{
-		//printf("(%d %d)", *(*stack_b)->content, a++);
-		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
-    	make_move(stack_b, stack_a);
-		/* else
-			break; */
-	}
-	//printf("hello");
-	if (!already_ordered(*stack_a))//0 se non ordinata, 1 se ordinata
-		last_fix(stack_a, count);
-}
+} */

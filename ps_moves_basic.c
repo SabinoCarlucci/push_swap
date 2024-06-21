@@ -6,16 +6,16 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:35:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/05/31 19:06:54 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(ps_list **head)//leggi da destra a sinistra per capire
+void	swap(t_ps_list **head)//leggi da destra a sinistra per capire
 {
-	ps_list	*first;
-	ps_list	*second;
+	t_ps_list	*first;
+	t_ps_list	*second;
 
 	if (!*head || !((*head)->next))
 		return ;
@@ -43,9 +43,9 @@ void	swap(ps_list **head)//leggi da destra a sinistra per capire
 	*head = (*head)->prev;//la head passa a 2 */
 }
 
-void	push(ps_list **from, ps_list **to)
+void	push(t_ps_list **from, t_ps_list **to)
 {
-	ps_list *temp;
+	t_ps_list *temp;
 
 	if (!from || !*from)
 		return;
@@ -78,15 +78,15 @@ void	push(ps_list **from, ps_list **to)
 	} */
 }
 
-void	rotate(ps_list **head)
+void	rotate(t_ps_list **head)
 {
-	ps_list *first;
-    ps_list *last;
+	t_ps_list *first;
+    t_ps_list *last;
 
     if (!*head || !(*head)->next)
         return;
     first = *head;
-    last = ft_lstlast_bd(*head);
+    last = ft_lstlast_dl(*head);
 
     *head = first->next;
     (*head)->prev = NULL;
@@ -101,20 +101,20 @@ void	rotate(ps_list **head)
 		swap(head);
 		return ;
 	}
-	(*head)->prev = ft_lstlast_bd(*head);//il prev di 1 diventa 3 (ultimo nodo)
-	((ft_lstlast_bd(*head))->next) = (*head);//il next di 3 diventa 1
+	(*head)->prev = ft_lstlast_dl(*head);//il prev di 1 diventa 3 (ultimo nodo)
+	((ft_lstlast_dl(*head))->next) = (*head);//il next di 3 diventa 1
 	*head = (*head)->next;//sposta head su 2
 	((*head)->prev)->next = NULL;//il next di 1 diventa NULL
 	(*head)->prev = NULL;//il prev di 2 diventa NULL */
 }
 
-void	reverse_rotate(ps_list **head)
+void	reverse_rotate(t_ps_list **head)
 {
-	ps_list	*last;
+	t_ps_list	*last;
 
 	if (!*head || !((*head)->next))
 		return ;
-	last = ft_lstlast_bd(*head);
+	last = ft_lstlast_dl(*head);
 	if (last->prev)
 		last->prev->next = NULL;
 	last->prev = NULL;
@@ -129,14 +129,14 @@ void	reverse_rotate(ps_list **head)
 		swap(head);
 		return ;
 	}
-	(*head)->prev = ft_lstlast_bd(*head);//il prev di 1 diventa 3 (ultimo nodo)
-	((ft_lstlast_bd(*head))->next) = (*head);//il next di 3 diventa 1
+	(*head)->prev = ft_lstlast_dl(*head);//il prev di 1 diventa 3 (ultimo nodo)
+	((ft_lstlast_dl(*head))->next) = (*head);//il next di 3 diventa 1
 	*head = (*head)->prev;//sposta head su 3
 	((*head)->prev)->next = NULL;//il next di 2 diventa NULL
 	(*head)->prev = NULL;//il prev di 3 diventa NULL */
 }
 
-void	rrr(ps_list **stack_a, ps_list **stack_b)
+void	rrr(t_ps_list **stack_a, t_ps_list **stack_b)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);

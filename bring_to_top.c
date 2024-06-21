@@ -6,13 +6,13 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:52:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/19 16:20:26 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:28:44 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	bring_to_top(ps_list *node, ps_list **stack_start, ps_list **stack_targ)
+void	bring_to_top(t_ps_list *node, t_ps_list **stack_start, t_ps_list **stack_targ)
 {
 	int	double_moves;
 
@@ -38,7 +38,7 @@ void	bring_to_top(ps_list *node, ps_list **stack_start, ps_list **stack_targ)
 		move_down_up(node->cost_down, node->target->cost_up, stack_start, stack_targ);
 }
 
-void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
+void	move_up(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_moves)//lista mosse
 {
 	int	single_moves;
 	int	count;
@@ -55,7 +55,7 @@ void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
 			rb(list1);
 		else
 		{
-			//printf("(%d)", a++);//togli
+			//printf("(%d)", a++);//togli//non qui
 			ra(list2);
 		}
 			
@@ -69,7 +69,7 @@ void	move_up(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
 	}
 }
 
-void	move_down(ps_list *node, ps_list **list1, ps_list **list2, int double_moves)
+void	move_down(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_moves)//lista mosse
 {
 	int	single_moves;
 	int	count;
@@ -95,7 +95,7 @@ void	move_down(ps_list *node, ps_list **list1, ps_list **list2, int double_moves
 	}
 }
 
-void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2)
+void	move_up_down(int up_moves, int down_moves, t_ps_list **list1, t_ps_list **list2)//lista mosse
 {
 	int	moves;
 
@@ -113,7 +113,7 @@ void	move_up_down(int up_moves, int down_moves, ps_list **list1, ps_list **list2
 	}
 }
 
-void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2)
+void	move_down_up(int down_moves, int up_moves, t_ps_list **list1, t_ps_list **list2)//lista mosse
 {
 	int	moves;
 	//int a = 0;//togli
@@ -127,7 +127,7 @@ void	move_down_up(int down_moves, int up_moves, ps_list **list1, ps_list **list2
 	moves = 0;
 	while (moves < up_moves)
 	{
-		//printf("(%d)", a++);//togli
+		//printf("(%d)", a++);//togli non qui
 		ra(list2);
 		moves++;
 	}

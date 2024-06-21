@@ -6,9 +6,10 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:09:31 by scarlucc          #+#    #+#             */
-/*   Updated: 2023/10/17 10:09:32 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:27:35 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
@@ -39,10 +40,10 @@ void	test(const void *s1, const void *s2, size_t n)
 
 int	main(void)
 {
-	test("abc", "abd", 4);
+	test("abc", "adl", 4);
 	test("abc", "abc", 5);
-	test("abc", "abd", 1);
-	test("abc", "abd", 0);
-	test("abc", "zbd", 3);
+	test("abc", "adl", 1);
+	test("abc", "adl", 0);
+	test("abc", "zdl", 3);
 	return (0);
 }*/

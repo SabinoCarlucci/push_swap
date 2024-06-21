@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/19 19:10:37 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:28:15 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	median_get(int count)//mediana = meta' arrotondata per eccesso
 }
 //cambia questa in una funzione che conta quanti nodi consecutivi sono ordinati
 
-int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine inverso)
+int	reverse_ordered(t_ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine inverso)
 {
 	int		check_order;
-	ps_list	*current;
+	t_ps_list	*current;
 
 	check_order = 1;
 	current = stack;
@@ -42,9 +42,9 @@ int	reverse_ordered(ps_list *stack)//0 se non ordinata, 1 se ordinata (in ordine
 	return (0);
 }
 
-void	find_target(ps_list	*a, ps_list *stack_target)
+void	find_target(t_ps_list	*a, t_ps_list *stack_target)
 {
-	ps_list	*current_t;
+	t_ps_list	*current_t;
 
 	current_t = stack_target;
 	a->target = current_t;
@@ -69,9 +69,9 @@ void	find_target(ps_list	*a, ps_list *stack_target)
 	} */
 }
 
-void	total_cost(ps_list	*stack)
+void	total_cost(t_ps_list	*stack)
 {
-	ps_list	*current;
+	t_ps_list	*current;
 	int		up;
 	int		down;
 	int		both;
@@ -115,11 +115,10 @@ void	total_cost(ps_list	*stack)
 	}
 }
 
-void	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st, int stack_size_tar)//forse cambiare di nuovo da int a void
+void	set_target_cost(t_ps_list	*stack_st, t_ps_list	*stack_target, int stack_size_st, int stack_size_tar)
 {
-	ps_list	*current;
+	t_ps_list	*current;
 	int		cost_up;
-	//int a = 0;//togli
 
 	current = stack_target;
 	cost_up = 0;
@@ -133,7 +132,6 @@ void	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st
 	}
 	current = stack_st;
 	cost_up = 0;
-	//printf("(%d)", a++);//togli
 	while (current)//mettere in altra funzione e richiamare due volte
 	{
 		find_target(current, stack_target);
@@ -142,51 +140,104 @@ void	set_target_cost(ps_list	*stack_st, ps_list	*stack_target, int stack_size_st
 		cost_up++;
 		current = current->next;
 	}
-	/* if (stack_size_st == 0)
-		return (1); */
 	total_cost(stack_st);
-	//return (0);
 }
 
-void	push_chunks(ps_list	**stack_a, ps_list	**stack_b, int count)
+void	push_chunks(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)
 {
-	int	max;
 	int	step;
 	int	left_in_a;
 	int	n;
+	int	pushed;
+	//int	binary;
+	//int a = 1;//togli
+	int infinito = 0;//togli
 
-	//step = size_chunks(count);
+	//binary = 0;
+	pushed = 0;
 	step = make_chunks(count);
 	n = 1;//cambia nome se riesci a scrivere condizione grssa su due righe
-	if ((count % step) > 3)
+	if ((count % step) > 3 || (count % step) == 0 || count == 5)//queste 4 righe possono diventare 3 invertendo
 		left_in_a = 3;
 	else
 		left_in_a = count % step;
-	max = count - left_in_a;
-	
-	//int a = 0;//togli
-	
-	while (count > left_in_a)//mettere altra condizione per evitare loop infinito?
+	while (count > left_in_a)
 	{			
+		/* printf("n = %d\n", n);
+		printf("step = %d\n", step);
+		printf("content = %d\n", *((*stack_a)->content));
+		printf("lista B = %d\n", count_stack(*stack_b));
+		printf("count = %d\n", count);
+		printf("left in a = %d\n", left_in_a);
+		printf("iterazioni = %d\n\n", infinito); */
+		if (*((ft_lstlast_dl(*stack_a))->content) >= n && *((ft_lstlast_dl(*stack_a))->content) < (n + step))
+			rra(stack_a);
 		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step))//se nodo e' nello stack, pushalo in b, altrimenti rotate
 		{
 			pb(stack_a, stack_b);
+			//printf("================================");
 			count--;
-			/* if ((max - (n + step + step)) < step)//problema qui
-				n += (max - (n + step + step)); */
-			if ((count - left_in_a) % step == 0)
+			pushed++;
+			/* if (binary == 1)
+				rb(stack_b); */
+			if (pushed == step)
+			{
 				n += step;
-			/* if ((count - (max % step)) % step == 0)//con 7 numeri da problemi
-				n += step; */
-			/* if ((max - (n + step)) < step)
-				n += (max - (n + step + step));//la differenza tra il massimo e il numero esatto 
-			if ((count - 3 - (max % step)) % step == 0)
-				n += step; */
-		}//prima di questo metti else if numero e' in fondo a stack, fai rra e poi push
-		else /* (*((*stack_a)->content) > max) */
+				step = make_chunks(count);
+				pushed = 0;
+				/* if (binary == 0)
+					binary = 1;
+				else
+					binary = 0; */
+				infinito++;//togli
+				/* if (n > 100)
+					exit(1); */
+			}
+		}
+		else
 		{
-			//printf("(%d)", a++);//togli
+			//printf("(%d)", a++);//togli//500 blocca qui
 			ra(stack_a);
+		}
+	}
+}
+
+void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)
+{
+	int	n = 1;
+	int	step = 33;
+	int	pushed = 0;
+	//int a = 1;
+	while (pushed < (count - 3) && !already_ordered(*stack_a))
+	{
+		
+		/* printf("n = %d\n", n);
+		printf("step = %d\n", step);
+		printf("content = %d\n", *((*stack_a)->content));
+		printf("count B = %d\n", count_stack(*stack_b));
+		printf("count A = %d\n", count_stack(*stack_a));
+		printf("count = %d\n", count);
+		printf("pushed = %d\n", pushed); */
+		/* if (*((ft_lstlast_dl(*stack_a))->content) >= n && *((ft_lstlast_dl(*stack_a))->content) < (n + step + step))
+			rra(stack_a); */
+		if (*((*stack_a)->content) >= n && (*((*stack_a)->content) < (n + step + step)) && *((*stack_a)->content) <= (count - 3))
+		{
+			pb(stack_a, stack_b);
+			//count--;
+			pushed++;
+		}
+		else
+		{
+			//printf("(%d)", a++);//togli//100 blocca qui
+			ra(stack_a);
+		}
+			
+		if (*stack_b && (*stack_b)->content && *((*stack_b)->content) >= n && *((*stack_b)->content) < (n + step))
+			rb(stack_b);//come evito rb inutili???
+		if (pushed == (n + step + step - 1))
+		{
+			n += (step * 2);
+			step = (step/3) + (step % 3);
 		}
 	}
 }
@@ -195,10 +246,19 @@ int	make_chunks(int	count)
 {
 	int	size_chunk;
 
-	size_chunk = 3;
+	size_chunk = 2;
+	if (count <= 500 && count >= 400)//metti caso 500+
+		size_chunk = count / 10;
+	else if (count <= 400 && count >= 200)
+		size_chunk = count / 8;
+	else if (count <= 200 && count > 5)
+		size_chunk = count / 6;
+	if ((count - size_chunk) > 0 && (count - size_chunk) < 4)//mettere dentro ciclo?
+		return (size_chunk);
+		/*
 	while (size_chunk <= 20 && (count / size_chunk) >= size_chunk)
-		size_chunk++;
-	return (size_chunk);
+		size_chunk++;*/
+	return (size_chunk); 
 }
 
 /* int	size_chunks(int	count)
@@ -216,10 +276,10 @@ int	make_chunks(int	count)
 	return (size_chunk);
 } */
 
-void	make_move(ps_list **stack_start, ps_list **stack_targ)
+void	make_move(t_ps_list **stack_start, t_ps_list **stack_targ)
 {
-	ps_list	*current;
-	ps_list	*cheapest;
+	t_ps_list	*current;
+	t_ps_list	*cheapest;
 
 	current = *stack_start;
 	cheapest = current;
@@ -229,15 +289,18 @@ void	make_move(ps_list **stack_start, ps_list **stack_targ)
 			cheapest = current;
 		current = current->next;
 	}
-	bring_to_top(cheapest, stack_start, stack_targ);
+	
+	/* if (*((*stack_targ)->content) == *(ft_lstlast_dl(*stack_start))->content + 1)//se consecutivo di testa a e' in fondo a b, pusha quello
+		rrb(stack_start);
+	else */
+		bring_to_top(cheapest, stack_start, stack_targ);
 	pa(stack_start, stack_targ);
 }
 
-void	last_fix(ps_list **stack_a, int count)
+void	last_fix(t_ps_list **stack_a, int count)
 {
-	ps_list	*current;
+	t_ps_list	*current;
 	int		consecutives;
-	//int a = 0;
 	
 	consecutives = 1;
 	current = *stack_a;
@@ -248,23 +311,19 @@ void	last_fix(ps_list **stack_a, int count)
 	}
 	if (consecutives > (count - consecutives))
 	{
-		while (consecutives-- > 0)
+		while ((count--) > consecutives)
 			rra(stack_a);
 	}
 	else
 	{
-		while (consecutives-- > 0)
-		{
-			//printf("(%d)", a++);//togli
+		while ((consecutives--) > 0)
 			ra(stack_a);
-		}
-			
 	}
 }
 
-/* void total_cost(ps_list *stack)
+/* void total_cost(t_ps_list *stack)
 {
-    ps_list *current;
+    t_ps_list *current;
     int up;
     int down;
     int both;
@@ -315,13 +374,13 @@ void	last_fix(ps_list **stack_a, int count)
     }
 } */
 
-/* void	cost_single_node(ps_list *node, int position)//da cambiare completamente
+/* void	cost_single_node(t_ps_list *node, int position)//da cambiare completamente
 {
 	int	median;
 	int	n_nodes;
 	int	odd;
 	
-	n_nodes = count_stack(ft_lstfirst_bd(node));
+	n_nodes = count_stack(ft_lstfirst_dl(node));
 	if (n_nodes % 2 == 0)
 		odd = 0;
 	else
