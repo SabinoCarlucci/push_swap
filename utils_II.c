@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 19:28:15 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/22 11:08:47 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,10 +202,10 @@ void	push_chunks(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)
 	}
 }
 
-void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)
+void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)//per 5 numeri conviene quello vecchio
 {
 	int	n = 1;
-	int	step = 33;
+	int	step = count / 3;
 	int	pushed = 0;
 	//int a = 1;
 	while (pushed < (count - 3) && !already_ordered(*stack_a))
@@ -261,18 +261,14 @@ int	make_chunks(int	count)
 	return (size_chunk); 
 }
 
-/* int	size_chunks(int	count)
+/*int	size_chunks(int	count)
 {
 	//minimo 3 elementi per chunk
 	//massimo 12 chunk
 	int	size_chunk;
 	
 	if (count <=7)
-		size_chunk = 4;
-	else if (count <= 100)
-		size_chunk = 12;
-	else
-		size_chunk = 20;
+		
 	return (size_chunk);
 } */
 
