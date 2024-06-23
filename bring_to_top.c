@@ -6,13 +6,14 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:52:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:28:44 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:20:42 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	bring_to_top(t_ps_list *node, t_ps_list **stack_start, t_ps_list **stack_targ)
+void	bring_to_top(t_ps_list *node, t_ps_list **stack_start,
+	t_ps_list **stack_targ)
 {
 	int	double_moves;
 
@@ -33,20 +34,22 @@ void	bring_to_top(t_ps_list *node, t_ps_list **stack_start, t_ps_list **stack_ta
 		move_down(node, stack_start, stack_targ, double_moves);
 	}
 	else if (node->up_down == 3)
-		move_up_down(node->cost_up, node->target->cost_down, stack_start, stack_targ);
+		move_up_down(node->cost_up, node->target->cost_down,
+			stack_start, stack_targ);
 	else
-		move_down_up(node->cost_down, node->target->cost_up, stack_start, stack_targ);
+		move_down_up(node->cost_down, node->target->cost_up,
+			stack_start, stack_targ);
 }
 
-void	move_up(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_moves)//lista mosse
+void	move_up(t_ps_list *node, t_ps_list **list1,
+	t_ps_list **list2, int double_moves)
 {
 	int	single_moves;
 	int	count;
-	//int a = 0;//togli
 
 	count = 0;
 	if (node->cost_up > double_moves)
-		single_moves = node->cost_up  - double_moves;
+		single_moves = node->cost_up - double_moves;
 	else
 		single_moves = node->target->cost_up - double_moves;
 	while (count < single_moves)
@@ -54,11 +57,7 @@ void	move_up(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_m
 		if (node->cost_up > double_moves)
 			rb(list1);
 		else
-		{
-			//printf("(%d)", a++);//togli//non qui
 			ra(list2);
-		}
-			
 		count++;
 	}
 	count = 0;
@@ -69,14 +68,15 @@ void	move_up(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_m
 	}
 }
 
-void	move_down(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_moves)//lista mosse
+void	move_down(t_ps_list *node, t_ps_list **list1,
+	t_ps_list **list2, int double_moves)
 {
 	int	single_moves;
 	int	count;
 
 	count = 0;
 	if (node->cost_down > double_moves)
-		single_moves = node->cost_down  - double_moves;
+		single_moves = node->cost_down - double_moves;
 	else
 		single_moves = node->target->cost_down - double_moves;
 	while (count < single_moves)
@@ -95,7 +95,8 @@ void	move_down(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double
 	}
 }
 
-void	move_up_down(int up_moves, int down_moves, t_ps_list **list1, t_ps_list **list2)//lista mosse
+void	move_up_down(int up_moves, int down_moves,
+	t_ps_list **list1, t_ps_list **list2)
 {
 	int	moves;
 
@@ -113,10 +114,10 @@ void	move_up_down(int up_moves, int down_moves, t_ps_list **list1, t_ps_list **l
 	}
 }
 
-void	move_down_up(int down_moves, int up_moves, t_ps_list **list1, t_ps_list **list2)//lista mosse
+void	move_down_up(int down_moves, int up_moves,
+	t_ps_list **list1, t_ps_list **list2)
 {
 	int	moves;
-	//int a = 0;//togli
 
 	moves = 0;
 	while (moves < down_moves)
@@ -127,7 +128,6 @@ void	move_down_up(int down_moves, int up_moves, t_ps_list **list1, t_ps_list **l
 	moves = 0;
 	while (moves < up_moves)
 	{
-		//printf("(%d)", a++);//togli non qui
 		ra(list2);
 		moves++;
 	}

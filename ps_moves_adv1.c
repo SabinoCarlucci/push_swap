@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 23:43:02 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:14:42 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:36:39 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sa(t_ps_list **stack_a)
 {
 	swap(stack_a);
-	ft_putstr_fd("sa\n", 1);//cambia tutte cosi', altrimenti stesso errore di error_message()
+	ft_putstr_fd("sa\n", 1);
 }
 
 void	sb(t_ps_list **stack_b)

@@ -6,17 +6,22 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:12:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:32:00 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+int	error_message(void)
+{
+	ft_putstr_fd("Error\n", 2);
+	return (1);
+}
+
 void	free_list(t_ps_list *stack)
 {
 	t_ps_list	*temp;
 
-	//stack = ft_lstfirst_dl(stack);//ho messo questo perche' ci sono problemi con la testa della lista
 	while (stack)
 	{
 		temp = stack;
@@ -25,11 +30,12 @@ void	free_list(t_ps_list *stack)
 		free(temp);
 	}
 }
-void    stack_temp(t_ps_list  *stack_a)//crea stack temporaneo copiando stackA, lo sorta e indicizza stackA
+
+void	stack_temp(t_ps_list	*stack_a)
 {
 	t_ps_list	*stack_temp;
 	t_ps_list	*current;
-	int		*temp;
+	int			*temp;
 
 	stack_temp = NULL;
 	current = stack_a;
@@ -40,19 +46,16 @@ void    stack_temp(t_ps_list  *stack_a)//crea stack temporaneo copiando stackA, 
 		ft_lstadd_back_dl(&stack_temp, ft_lstnew_dl(temp));
 		current = current->next;
 	}
-	//printf("STACK_TEMP\n");//commenta
-	//print_stack(stack_temp);//commenta
-	//printf("\n");//commenta
 	bubble_sort(stack_temp);
 	index_stack_a(stack_a, stack_temp);
 	free_list(stack_temp);
 	stack_temp = NULL;
 }
 
-void	bubble_sort(t_ps_list  *stack_temp)
+void	bubble_sort(t_ps_list *stack_temp)
 {
-	int	temp;
-	t_ps_list  *head;
+	int			temp;
+	t_ps_list	*head;
 
 	while (!already_ordered(stack_temp))
 	{
@@ -68,16 +71,13 @@ void	bubble_sort(t_ps_list  *stack_temp)
 			head = head->next;
 		}
 	}
-	//printf("STACK_TEMP dopo bubble sort\n");//cancella prima di consegna
-	//print_stack(stack_temp);//cancella prima di consegna
-	//printf("\n");//cancella prima di consegna
 }
 
-void	index_stack_a(t_ps_list  *stack_a, t_ps_list  *stack_temp)//sostituisce i numeri in stackA con indici
+void	index_stack_a(t_ps_list *stack_a, t_ps_list *stack_temp)
 {
-	int		index;
-	t_ps_list  *current_a;
-	t_ps_list  *current_t;
+	int			index;
+	t_ps_list	*current_a;
+	t_ps_list	*current_t;
 
 	current_a = stack_a;
 	while (current_a)
@@ -89,26 +89,11 @@ void	index_stack_a(t_ps_list  *stack_a, t_ps_list  *stack_temp)//sostituisce i n
 			if (*(current_a->content) == *(current_t->content))
 			{
 				*(current_a->content) = index;
-				break;
+				break ;
 			}
 			index++;
-			current_t = current_t->next;	
+			current_t = current_t->next;
 		}
 		current_a = current_a->next;
 	}
-}
-
-int	count_stack(t_ps_list	*stack)//count = numero esatto di nodi
-{
-	t_ps_list	*current;
-	int		count;
-	
-	current = stack;
-	count = 0;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	return (count);
 }

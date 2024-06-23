@@ -6,11 +6,26 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:29:04 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:52:46 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 22:35:09 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	count_stack(t_ps_list	*stack)
+{
+	t_ps_list	*current;
+	int			count;
+
+	current = stack;
+	count = 0;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
+}
 
 t_ps_list	*make_lst_from_ints(int argc, char **argv, t_ps_list *stack_a)
 {
@@ -62,12 +77,9 @@ int	main(int argc, char **argv)
 		exit(1);
 	if (!already_ordered(stack_a))
 	{
-		//printf("algoritmo, vieni a me!\n");//chiama algoritmo
 		stack_temp(stack_a);
 		alg_start(&stack_a);
 	}
-	//printf("\nstack_A fine main\n");//togli prima di consegna
-	//print_stack(stack_a);//togli prima di consegna
 	free_list(stack_a);
 	stack_a = NULL;
 	return (0);

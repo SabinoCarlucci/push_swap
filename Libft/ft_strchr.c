@@ -6,9 +6,10 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 18:06:02 by scarlucc          #+#    #+#             */
-/*   Updated: 2023/10/15 18:06:04 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 22:36:14 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
@@ -35,7 +36,8 @@ void	test(const char *s, int c)
 		printf("Il carattere '%c' non è stato trovato nella stringa '%s'\n",
 		 (char)c, s);
 	else
-		printf("ho trovato il carattere '%c' al posto numero %d della stringa %s\n",
+		printf("ho trovato il carattere '%c' 
+		al posto numero %d della stringa %s\n",
 		 (char)c, index, s);
 }
 
