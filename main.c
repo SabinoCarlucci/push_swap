@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:29:04 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:52:46 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:04:29 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ t_ps_list	*make_lst_from_string(char **argv, t_ps_list *stack_a)
 int	main(int argc, char **argv)
 {
 	t_ps_list	*stack_a;
+	t_moves		*stack_moves;
 
 	stack_a = NULL;
+	stack_moves = NULL;
 	if (argc == 1)
 		return (0);
 	else if (argc == 2)
@@ -64,12 +66,16 @@ int	main(int argc, char **argv)
 	{
 		//printf("algoritmo, vieni a me!\n");//chiama algoritmo
 		stack_temp(stack_a);
-		alg_start(&stack_a);
+		alg_start(&stack_a, &stack_moves);
 	}
 	//printf("\nstack_A fine main\n");//togli prima di consegna
 	//print_stack(stack_a);//togli prima di consegna
+	//fix_moves(&stack_moves);
+	print_moves(stack_moves);
 	free_list(stack_a);
+	free_list_moves(stack_moves);
 	stack_a = NULL;
+	stack_moves = NULL;
 	return (0);
 }
 

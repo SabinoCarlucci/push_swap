@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 19:14:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/22 11:08:47 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:42:20 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,66 +143,7 @@ void	set_target_cost(t_ps_list	*stack_st, t_ps_list	*stack_target, int stack_siz
 	total_cost(stack_st);
 }
 
-void	push_chunks(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)
-{
-	int	step;
-	int	left_in_a;
-	int	n;
-	int	pushed;
-	//int	binary;
-	//int a = 1;//togli
-	int infinito = 0;//togli
-
-	//binary = 0;
-	pushed = 0;
-	step = make_chunks(count);
-	n = 1;//cambia nome se riesci a scrivere condizione grssa su due righe
-	if ((count % step) > 3 || (count % step) == 0 || count == 5)//queste 4 righe possono diventare 3 invertendo
-		left_in_a = 3;
-	else
-		left_in_a = count % step;
-	while (count > left_in_a)
-	{			
-		/* printf("n = %d\n", n);
-		printf("step = %d\n", step);
-		printf("content = %d\n", *((*stack_a)->content));
-		printf("lista B = %d\n", count_stack(*stack_b));
-		printf("count = %d\n", count);
-		printf("left in a = %d\n", left_in_a);
-		printf("iterazioni = %d\n\n", infinito); */
-		if (*((ft_lstlast_dl(*stack_a))->content) >= n && *((ft_lstlast_dl(*stack_a))->content) < (n + step))
-			rra(stack_a);
-		if (*((*stack_a)->content) >= n && *((*stack_a)->content) < (n + step))//se nodo e' nello stack, pushalo in b, altrimenti rotate
-		{
-			pb(stack_a, stack_b);
-			//printf("================================");
-			count--;
-			pushed++;
-			/* if (binary == 1)
-				rb(stack_b); */
-			if (pushed == step)
-			{
-				n += step;
-				step = make_chunks(count);
-				pushed = 0;
-				/* if (binary == 0)
-					binary = 1;
-				else
-					binary = 0; */
-				infinito++;//togli
-				/* if (n > 100)
-					exit(1); */
-			}
-		}
-		else
-		{
-			//printf("(%d)", a++);//togli//500 blocca qui
-			ra(stack_a);
-		}
-	}
-}
-
-void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)//per 5 numeri conviene quello vecchio
+void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count, t_moves **stack_moves)
 {
 	int	n = 1;
 	int	step = count / 3;
@@ -210,30 +151,20 @@ void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count)//per 5 nu
 	//int a = 1;
 	while (pushed < (count - 3) && !already_ordered(*stack_a))
 	{
-		
-		/* printf("n = %d\n", n);
-		printf("step = %d\n", step);
-		printf("content = %d\n", *((*stack_a)->content));
-		printf("count B = %d\n", count_stack(*stack_b));
-		printf("count A = %d\n", count_stack(*stack_a));
-		printf("count = %d\n", count);
-		printf("pushed = %d\n", pushed); */
-		/* if (*((ft_lstlast_dl(*stack_a))->content) >= n && *((ft_lstlast_dl(*stack_a))->content) < (n + step + step))
-			rra(stack_a); */
 		if (*((*stack_a)->content) >= n && (*((*stack_a)->content) < (n + step + step)) && *((*stack_a)->content) <= (count - 3))
 		{
-			pb(stack_a, stack_b);
+			pb(stack_a, stack_b, stack_moves);
 			//count--;
 			pushed++;
 		}
 		else
 		{
 			//printf("(%d)", a++);//togli//100 blocca qui
-			ra(stack_a);
+			ra(stack_a, stack_moves);
 		}
 			
-		if (*stack_b && (*stack_b)->content && *((*stack_b)->content) >= n && *((*stack_b)->content) < (n + step))
-			rb(stack_b);//come evito rb inutili???
+		if (*stack_b && (*stack_b)->content && (count_stack(*stack_b) > 1) && *((*stack_b)->content) >= n && *((*stack_b)->content) < (n + step))
+			rb(stack_b, stack_moves);//come evito rb inutili???
 		if (pushed == (n + step + step - 1))
 		{
 			n += (step * 2);
@@ -247,32 +178,17 @@ int	make_chunks(int	count)
 	int	size_chunk;
 
 	size_chunk = 2;
-	if (count <= 500 && count >= 400)//metti caso 500+
-		size_chunk = count / 10;
-	else if (count <= 400 && count >= 200)
-		size_chunk = count / 8;
-	else if (count <= 200 && count > 5)
-		size_chunk = count / 6;
 	if ((count - size_chunk) > 0 && (count - size_chunk) < 4)//mettere dentro ciclo?
 		return (size_chunk);
+	else
+		size_chunk = count / 3;
 		/*
 	while (size_chunk <= 20 && (count / size_chunk) >= size_chunk)
 		size_chunk++;*/
 	return (size_chunk); 
 }
 
-/*int	size_chunks(int	count)
-{
-	//minimo 3 elementi per chunk
-	//massimo 12 chunk
-	int	size_chunk;
-	
-	if (count <=7)
-		
-	return (size_chunk);
-} */
-
-void	make_move(t_ps_list **stack_start, t_ps_list **stack_targ)
+void	make_move(t_ps_list **stack_start, t_ps_list **stack_targ, t_moves **stack_moves)
 {
 	t_ps_list	*current;
 	t_ps_list	*cheapest;
@@ -289,11 +205,11 @@ void	make_move(t_ps_list **stack_start, t_ps_list **stack_targ)
 	/* if (*((*stack_targ)->content) == *(ft_lstlast_dl(*stack_start))->content + 1)//se consecutivo di testa a e' in fondo a b, pusha quello
 		rrb(stack_start);
 	else */
-		bring_to_top(cheapest, stack_start, stack_targ);
-	pa(stack_start, stack_targ);
+		bring_to_top(cheapest, stack_start, stack_targ, stack_moves);
+	pa(stack_start, stack_targ, stack_moves);
 }
 
-void	last_fix(t_ps_list **stack_a, int count)
+void	last_fix(t_ps_list **stack_a, int count, t_moves **stack_moves)
 {
 	t_ps_list	*current;
 	int		consecutives;
@@ -308,12 +224,12 @@ void	last_fix(t_ps_list **stack_a, int count)
 	if (consecutives > (count - consecutives))
 	{
 		while ((count--) > consecutives)
-			rra(stack_a);
+			rra(stack_a, stack_moves);
 	}
 	else
 	{
 		while ((consecutives--) > 0)
-			ra(stack_a);
+			ra(stack_a, stack_moves);
 	}
 }
 

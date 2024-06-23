@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:28:54 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:20:01 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,49 @@ void	ft_lstadd_front_dl(t_ps_list **lst, t_ps_list *new)
 			(*lst)->prev = new;
 		*lst = new;
 	}
+}
+
+void	ft_lstadd_move(t_moves **lst, t_moves *new)
+{
+	t_moves	*l_node;
+
+	l_node = *lst;
+	if (lst)
+	{
+		if (!*lst)
+		{
+			*lst = new;
+			return ;
+		}
+		l_node = ft_last_move(*lst);
+		l_node->next = new;
+	}
+}
+
+t_moves	*ft_last_move(t_moves *lst)
+{
+	t_moves	*current;
+
+	current = lst;
+	while (current)
+	{
+		if ((current->next) == NULL)
+			return (current);
+		current = current->next;
+	}
+	return (current);
+}
+
+t_moves	*ft_newmove(void *content)
+{
+	t_moves	*n_node;
+
+	n_node = (t_moves *)malloc(sizeof(t_moves));
+	if (!n_node)
+		return (NULL);
+	n_node->move = content;
+	n_node->next = NULL;
+	return (n_node);
 }
 
 void	ft_lstadd_back_dl(t_ps_list **lst, t_ps_list *new)

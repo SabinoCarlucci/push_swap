@@ -6,13 +6,13 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 19:02:51 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:15:59 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	alg_start(t_ps_list	**stack_a)
+void	alg_start(t_ps_list	**stack_a, t_moves **stack_moves)
 {
 	int	count;
 	t_ps_list	**stack_b;
@@ -22,72 +22,72 @@ void	alg_start(t_ps_list	**stack_a)
 		*stack_b = NULL;
 	count = count_stack(*stack_a);
 	if (count == 2)
-		sa(stack_a);
+		sa(stack_a, stack_moves);
 	else if (count < 4)
-		alg_sort_one_to_three(stack_a, stack_b);
+		alg_sort_one_to_three(stack_a, stack_b, stack_moves);
 	/* else if (count == 5)//aggiungi caso di 4 numeri
 		alg_sort_five(stack_a, stack_b, 3); */
 	else
-		alg_sort_big(stack_a, stack_b, count);
+		alg_sort_big(stack_a, stack_b, count, stack_moves);
 	free(stack_b);
 }
 
-void	alg_sort_one_to_three(t_ps_list	**stack_a, t_ps_list	**stack_b)
+void	alg_sort_one_to_three(t_ps_list	**stack_a, t_ps_list	**stack_b, t_moves **stack_moves )
 {
 	if ((*((*stack_a)->content) < *((*stack_a)->next->content))
 		&& (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
-		rra(stack_a);
+		rra(stack_a, stack_moves);
 	else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
 		&& (*((*stack_a)->next->content)
 			> *((*stack_a)->next->next->content)))
 	{
-		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
-			ss(stack_a, stack_b);
+		if ((count_stack(*stack_b) > 1) && (*(*stack_b)->content < *(*stack_b)->next->content))
+			ss(stack_a, stack_b, stack_moves);
 		else
-			sa(stack_a);
+			sa(stack_a, stack_moves);
 	}
 	if ((*((*stack_a)->content) > *((*stack_a)->next->content))
 		&& (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
-		ra(stack_a);
+		ra(stack_a, stack_moves);
 	else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
 		&& (*((*stack_a)->next->content)
 			< *((*stack_a)->next->next->content)))
 	{
-		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
-				ss(stack_a, stack_b);
+		if ((count_stack(*stack_b) > 1) && (*(*stack_b)->content < *(*stack_b)->next->content))
+				ss(stack_a, stack_b, stack_moves);
 		else
-			sa(stack_a);
+			sa(stack_a, stack_moves);
 	}
 	else
-		rra(stack_a);
+		rra(stack_a, stack_moves);
 }
 
-void	alg_sort_big(t_ps_list **stack_a, t_ps_list	**stack_b, int count)
+void	alg_sort_big(t_ps_list **stack_a, t_ps_list	**stack_b, int count, t_moves **stack_moves)
 {	
 	int stack_size_st;
 	int stack_size_tar;
 
 	//push_chunks(stack_a, stack_b, count);
-	push_chunks2(stack_a, stack_b, count);
+	push_chunks2(stack_a, stack_b, count, stack_moves);
 	stack_size_st = count_stack(*stack_b);
 	stack_size_tar = count_stack(*stack_a);
 	if (!already_ordered(*stack_a) && stack_size_tar > 1)
 	{
 		if (stack_size_tar == 2)
-			sa(stack_a);
+			sa(stack_a, stack_moves);
 		else
-			alg_sort_one_to_three(stack_a, stack_b);
+			alg_sort_one_to_three(stack_a, stack_b, stack_moves);
 	}
 	//int a = 0;
     while (*stack_b && (*stack_b)->content)//aggiunto * davanti primo stack_b
 	{
 		//printf("(%d %d)", *(*stack_b)->content, a++);
 		set_target_cost(*stack_b, *stack_a, stack_size_st--, stack_size_tar++);
-    	make_move(stack_b, stack_a);
+    	make_move(stack_b, stack_a, stack_moves);
 	}
 	//printf("hello");
 	if (!already_ordered(*stack_a))//0 se non ordinata, 1 se ordinata
-		last_fix(stack_a, count);
+		last_fix(stack_a, count, stack_moves);
 }
 
 /* void	sort_five_start(t_ps_list **stack_a, t_ps_list **stack_b, int median)//non funziona piu!!!!

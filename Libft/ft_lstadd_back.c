@@ -6,10 +6,12 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:42:29 by scarlucc          #+#    #+#             */
-/*   Updated: 2023/11/03 16:42:32 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/22 20:15:47 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+
 //#include "ft_lstlast.c"
 //#include "ft_lstnew.c"
 

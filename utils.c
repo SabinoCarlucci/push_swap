@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:12:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 14:16:23 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_list(t_ps_list *stack)
 		free(temp);
 	}
 }
+
 void    stack_temp(t_ps_list  *stack_a)//crea stack temporaneo copiando stackA, lo sorta e indicizza stackA
 {
 	t_ps_list	*stack_temp;

@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 11:35:30 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/22 20:18:31 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	swap(t_ps_list **head)//leggi da destra a sinistra per capire
 	t_ps_list	*first;
 	t_ps_list	*second;
 
-	if (!*head || !((*head)->next))
+	if (!*head || !((*head)->next))//mossa protetta?
 		return ;
 	first = *head;
 	second = first->next;
@@ -136,9 +136,10 @@ void	reverse_rotate(t_ps_list **head)
 	(*head)->prev = NULL;//il prev di 3 diventa NULL */
 }
 
-void	rrr(t_ps_list **stack_a, t_ps_list **stack_b)
+void	rrr(t_ps_list **stack_a, t_ps_list **stack_b, t_moves **stack_moves)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);
-	ft_putstr_fd("rrr\n", 1);
+	//ft_putstr_fd("rrr\n", 1);
+	ft_lstadd_move(stack_moves, ft_newmove("rra\n"));
 }

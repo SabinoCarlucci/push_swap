@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:14:55 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 15:21:53 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:17:37 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	check_input_repeat(char **argv)
 {
 	int	count;
 	int incr;
-	int	n;
 
 	count = 0;
 	while (argv[count])
@@ -26,17 +25,28 @@ int	check_input_repeat(char **argv)
 		incr = 1;
 		while (argv[count + incr])
 		{
-			if (ft_strlen(argv[count]) > ft_strlen(argv[count + incr]))
-				n = ft_strlen(argv[count]);
-			else
-				n = ft_strlen(argv[count + incr]);
-			if(!(ft_strncmp(argv[count], argv[count + incr], n)))
+			if(check_duplicates(argv[count], argv[count + incr]) == 0)
 				return(error_message());
 			incr++;
 		}
 		count++;
 	}
 	return (0);
+}
+
+int	check_duplicates(const char *input, const char *input_next)
+{
+	int	compare;
+
+	if (*input == '+' || *input == '-')
+		input++;
+	if (*input_next == '+' || *input_next == '-')
+		input_next++;
+	if (ft_strlen(input) > ft_strlen(input_next))
+		compare = ft_strlen(input);
+	else
+		compare = ft_strlen(input_next);
+	return((ft_strncmp(input, input_next, compare)));
 }
 
 int	check_num(char *arg)//controlla se ci metti + o - in mezzo ai numeri
@@ -105,6 +115,33 @@ int	error_message(void)
 	ft_putstr_fd("Error\n", 2);
 	return (1);
 }
+
+/* int	check_input_repeat_old(char **argv)
+{
+	int	count;
+	int incr;
+	int	n;
+
+	count = 0;
+	while (argv[count])
+	{
+		if(check_num(argv[count]))
+			return (1);
+		incr = 1;
+		while (argv[count + incr])
+		{
+			if (ft_strlen(argv[count]) > ft_strlen(argv[count + incr]))
+				n = ft_strlen(argv[count]);
+			else
+				n = ft_strlen(argv[count + incr]);
+			if(!(ft_strncmp(argv[count], argv[count + incr], n)))
+				return(error_message());
+			incr++;
+		}
+		count++;
+	}
+	return (0);
+} */
 
 void	print_list(t_ps_list *stack)//commenta prima di consegnare, anche in .h
 {
