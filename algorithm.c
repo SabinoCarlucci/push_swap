@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:44:05 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 19:02:51 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:44:30 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,41 @@ void	alg_start(t_ps_list	**stack_a)
 
 void	alg_sort_one_to_three(t_ps_list	**stack_a, t_ps_list	**stack_b)
 {
-	if ((*((*stack_a)->content) < *((*stack_a)->next->content))
-		&& (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
-		rra(stack_a);
-	else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
-		&& (*((*stack_a)->next->content)
-			> *((*stack_a)->next->next->content)))
-	{
-		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
-			ss(stack_a, stack_b);
-		else
-			sa(stack_a);
-	}
-	if ((*((*stack_a)->content) > *((*stack_a)->next->content))
-		&& (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
-		ra(stack_a);
-	else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
-		&& (*((*stack_a)->next->content)
-			< *((*stack_a)->next->next->content)))
-	{
-		if (*(*stack_b)->content && (*(*stack_b)->content < *(*stack_b)->next->content))
-				ss(stack_a, stack_b);
-		else
-			sa(stack_a);
-	}
-	else
-		rra(stack_a);
+   if ((*((*stack_a)->content) < *((*stack_a)->next->content))
+       && (*((*stack_a)->content) < *((*stack_a)->next->next->content)))
+       rra(stack_a);
+   else if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+       && (*((*stack_a)->next->content)
+           > *((*stack_a)->next->next->content)))
+   {
+       if ((count_stack(*stack_b) > 1) && (*(*stack_b)->content < *(*stack_b)->next->content))
+           ss(stack_a, stack_b);
+       else
+           sa(stack_a);
+   }
+   if ((*((*stack_a)->content) > *((*stack_a)->next->content))
+       && (*((*stack_a)->content) > *((*stack_a)->next->next->content)))
+       ra(stack_a);
+   else if ((*((*stack_a)->next->content) < *((*stack_a)->content))
+       && (*((*stack_a)->next->content)
+           < *((*stack_a)->next->next->content)))
+   {
+       if ((count_stack(*stack_b) > 1) && (*(*stack_b)->content < *(*stack_b)->next->content))
+               ss(stack_a, stack_b);
+       else
+           sa(stack_a);
+   }
+   else
+       rra(stack_a);
 }
+
 
 void	alg_sort_big(t_ps_list **stack_a, t_ps_list	**stack_b, int count)
 {	
 	int stack_size_st;
 	int stack_size_tar;
 
-	//push_chunks(stack_a, stack_b, count);
-	push_chunks2(stack_a, stack_b, count);
+	push_chunks(stack_a, stack_b, count);
 	stack_size_st = count_stack(*stack_b);
 	stack_size_tar = count_stack(*stack_a);
 	if (!already_ordered(*stack_a) && stack_size_tar > 1)

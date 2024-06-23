@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/23 17:34:08 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:54:45 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	alg_sort_five(t_ps_list	**stack_a, t_ps_list	*stack_b, int	median);
 void	sort_five_start(t_ps_list **stack_a, t_ps_list **stack_b, int median);
 void	alg_sort_big(t_ps_list **stack_a, t_ps_list	**stack_b, int count);
 void	push_chunks(t_ps_list	**stack_a, t_ps_list	**stack_b, int count);
-void	push_chunks2(t_ps_list	**stack_a, t_ps_list	**stack_b, int count);
 //bring_to_top
 void	bring_to_top(t_ps_list *node, t_ps_list **stack_start, t_ps_list **stack_targ);
 void	move_up(t_ps_list *node, t_ps_list **list1, t_ps_list **list2, int double_moves);
