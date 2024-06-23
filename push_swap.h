@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/21 19:03:52 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:34:08 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void print_list(t_ps_list *stack_a);//cancella prima di consegnare
 void	print_stack(t_ps_list *stack);//cancella prima di consegnare
 void	print_both_stacks(t_ps_list *stack_a, t_ps_list *stack_b);//cancella prima di consegnare
 int	check_input_repeat(char **argv);
+int check_duplicates(const char *input, const char *input_next);
 int	check_num(char *arg);
 int	check_limits_int(char *arg);
 t_ps_list	*make_lst_from_array(int	*array, int size, t_ps_list *stack_a);
