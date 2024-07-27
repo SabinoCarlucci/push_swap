@@ -1,3 +1,10 @@
+TO DO:
+aggiungi controllo sull'input
+
+*argv[1] == '\0'
+
+per casistica ./push_swap ""
+
 FONTI CONSULTATE:
 
 https://www.youtube.com/watch?v=wRvipSG4Mmk
