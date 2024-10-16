@@ -6,11 +6,16 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:46:56 by scarlucc          #+#    #+#             */
-/*   Updated: 2023/10/09 14:47:08 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:48:07 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 # include <stddef.h>
 # include <stdio.h>
@@ -52,6 +57,11 @@ void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
+//get_next_line.c
+char		*ft_strdup_mod(const char *s);
+char		*get_next_line(int fd);
+char		*read_line(int fd, char *new, char *static_buffer);
+char		*get_output(char *output);
 
 typedef struct s_list
 {

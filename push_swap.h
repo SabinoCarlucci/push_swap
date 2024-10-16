@@ -6,7 +6,7 @@
 /*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/23 21:46:29 by scarlucc         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:54:37 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ typedef struct t_list
 	struct t_list	*next;
 }					t_moves;
 
+//start.c
+int			count_stack(t_ps_list	*stack);
+t_ps_list	*make_lst_from_ints(int argc, char **argv, t_ps_list *stack_a);
+t_ps_list	*make_lst_from_string(char **argv, t_ps_list *stack_a);
+//node_operations.c 
 t_ps_list	*ft_lstnew_dl(void *content);
 void		ft_lstadd_front_dl(t_ps_list **lst, t_ps_list *new);
 void		ft_lstadd_back_dl(t_ps_list **lst, t_ps_list *new);
@@ -72,7 +77,6 @@ int			already_ordered(t_ps_list *stack);
 void		stack_temp(t_ps_list *stack_a);
 void		bubble_sort(t_ps_list	*stack_temp);
 void		index_stack_a(t_ps_list *stack_a, t_ps_list *stack_temp);
-int			count_stack(t_ps_list	*stack);
 //utilsII
 int			median_get(int count);
 int			reverse_ordered(t_ps_list *stack);
@@ -107,6 +111,12 @@ void		move_up_down(int up_moves, int down_moves,
 				t_ps_list **list1, t_ps_list **list2);
 void		move_down_up(int down_moves, int up_moves,
 				t_ps_list **list1, t_ps_list **list2);
+//checker.c
+void		check_moves(t_ps_list **stack_a, t_ps_list **stack_b);
+void		check_moves_b(char *move, int *stop,
+				t_ps_list **stack_a, t_ps_list **stack_b);
+void		check_moves_c(char *move, int *stop,
+				t_ps_list **stack_a, t_ps_list **stack_b);
 //later
 //void		print_list(t_ps_list *stack_a);
 //void		print_stack(t_ps_list *stack);
