@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: scarlucc <scarlucc@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 18:16:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/10/16 18:54:37 by scarlucc         ###   ########.fr       */
+/*   Updated: 2026/10/07 20:35:53 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,15 @@ void		rrb(t_ps_list **stack_b);
 void		rrr(t_ps_list **stack_a, t_ps_list **stack_b);
 //checks
 int			check_input_repeat(char **argv);
-int			check_duplicates(const char *input, const char *input_next);
+//int			check_duplicates(const char *input, const char *input_next);
+int			check_duplicates(t_ps_list	*stack_temp);
 int			check_num(char *arg);
 int			check_limits_int(char *arg);
 int			error_message(void);
 //utils
 void		free_list(t_ps_list *stack);
 int			already_ordered(t_ps_list *stack);
-void		stack_temp(t_ps_list *stack_a);
+int			stack_temp(t_ps_list *stack_a);
 void		bubble_sort(t_ps_list	*stack_temp);
 void		index_stack_a(t_ps_list *stack_a, t_ps_list *stack_temp);
 //utilsII

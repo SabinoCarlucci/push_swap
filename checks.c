@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: scarlucc <scarlucc@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:14:55 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/23 22:28:01 by scarlucc         ###   ########.fr       */
+/*   Updated: 2026/10/07 20:19:10 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,42 @@
 int	check_input_repeat(char **argv)
 {
 	int	count;
-	int	incr;
+	//int	incr;
 
 	count = 0;
 	while (argv[count])
 	{
 		if (check_num(argv[count]))
 			return (1);
-		incr = 1;
+		/* incr = 1;
 		while (argv[count + incr])
 		{
 			if (check_duplicates(argv[count], argv[count + incr]) == 0)
 				return (error_message());
 			incr++;
-		}
+		} */
 		count++;
 	}
 	return (0);
 }
 
-int	check_duplicates(const char *input, const char *input_next)
+int	check_duplicates(t_ps_list	*stack_temp)
+{
+	int			check_order;
+	t_ps_list	*current;
+
+	check_order = 0;
+	current = stack_temp;
+	while (((current->next) != NULL) && check_order)
+	{
+		if (*(current->content) == *((current->next)->content))
+			check_order = 1;
+		current = current->next;
+	}
+	return (check_order);
+}
+
+/* int	check_duplicates(const char *input, const char *input_next)
 {
 	int	compare;
 
@@ -47,18 +63,24 @@ int	check_duplicates(const char *input, const char *input_next)
 	else
 		compare = ft_strlen(input_next);
 	return ((ft_strncmp(input, input_next, compare)));
-}
+} */
 
 int	check_num(char *arg)
 {
 	int		count;
+	int		zeros;
 
 	count = 0;
+	zeros = 0;
+	if (arg[0] == '\0')
+		return (error_message());
 	if ((arg[0] == '-' && arg[1]) || (arg[0] == '+' && arg[1]))
 		count++;
-	while (arg[count])
+	while (arg[count + zeros] == '0')
+		zeros++;
+	while (arg[count + zeros])
 	{
-		if (!(ft_isdigit(arg[count]))
+		if (!(ft_isdigit(arg[count + zeros]))
 			|| count > (10 + (arg[0] == '-' || arg[0] == '+')))
 			return (error_message());
 		count++;
@@ -70,25 +92,25 @@ int	check_num(char *arg)
 
 int	check_limits_int(char *arg)
 {
-	int		plus;
-	int		minus;
+	int		i;
 	char	*compare;
 
-	plus = 1;
-	minus = 0;
+	i = 0;
 	if (arg[0] == '-' || arg[0] == '+')
-		minus = plus;
+		i = 1;
 	if (arg[0] == '-')
 		compare = "-2147483648\0";
 	else if (arg[0] == '+')
 		compare = "+2147483647\0";
 	else
 		compare = "2147483647\0";
-	while (arg[minus])
+	while (arg[i])
 	{
-		if (arg[minus] > compare[minus])
+		if (arg[i] > compare[i])
 			return (error_message());
-		minus++;
+		else if (arg[i] < compare[i])
+			return (0);
+		i++;
 	}
 	return (0);
 }

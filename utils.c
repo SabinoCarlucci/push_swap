@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scarlucc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: scarlucc <scarlucc@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:12:08 by scarlucc          #+#    #+#             */
-/*   Updated: 2024/06/23 21:32:00 by scarlucc         ###   ########.fr       */
+/*   Updated: 2026/10/07 20:35:03 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void	free_list(t_ps_list *stack)
 	}
 }
 
-void	stack_temp(t_ps_list	*stack_a)
+int	stack_temp(t_ps_list	*stack_a)
 {
 	t_ps_list	*stack_temp;
 	t_ps_list	*current;
 	int			*temp;
+	int			flag;
 
 	stack_temp = NULL;
 	current = stack_a;
+	flag = 0;
 	while (current)
 	{
 		temp = (int *)ft_calloc(1, sizeof(int));
@@ -47,9 +49,12 @@ void	stack_temp(t_ps_list	*stack_a)
 		current = current->next;
 	}
 	bubble_sort(stack_temp);
+	if (check_duplicates(stack_temp))
+		flag = 1;
 	index_stack_a(stack_a, stack_temp);
 	free_list(stack_temp);
 	stack_temp = NULL;
+	return (flag);
 }
 
 void	bubble_sort(t_ps_list *stack_temp)
