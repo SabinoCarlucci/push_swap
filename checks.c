@@ -6,7 +6,7 @@
 /*   By: scarlucc <scarlucc@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:14:55 by scarlucc          #+#    #+#             */
-/*   Updated: 2026/10/07 20:19:10 by scarlucc         ###   ########.fr       */
+/*   Updated: 2026/10/07 23:51:49 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ int	check_input_repeat(char **argv)
 
 int	check_duplicates(t_ps_list	*stack_temp)
 {
-	int			check_order;
+	int			found;
 	t_ps_list	*current;
 
-	check_order = 0;
+	found = 0;
 	current = stack_temp;
-	while (((current->next) != NULL) && check_order)
+	while (((current->next) != NULL) && !found)
 	{
 		if (*(current->content) == *((current->next)->content))
-			check_order = 1;
+			found = 1;
 		current = current->next;
 	}
-	return (check_order);
+	return (found);
 }
 
 /* int	check_duplicates(const char *input, const char *input_next)
