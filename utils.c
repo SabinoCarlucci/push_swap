@@ -31,7 +31,7 @@ void	free_list(t_ps_list *stack)
 	}
 }
 
-int	stack_temp(t_ps_list	*stack_a)
+int	indexing(t_ps_list	*stack_a)
 {
 	t_ps_list	*stack_temp;
 	t_ps_list	*current;

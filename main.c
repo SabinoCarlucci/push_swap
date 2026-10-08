@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 		stack_a = make_lst_from_ints((argc - 1), (argv + 1), stack_a);
 	if (!stack_a)
 		return (1);
-	if (stack_temp(stack_a))
+	if (indexing(stack_a))
 	{
 		free_list(stack_a);
 		return (error_message());
