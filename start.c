@@ -6,7 +6,7 @@
 /*   By: scarlucc <scarlucc@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:29:04 by scarlucc          #+#    #+#             */
-/*   Updated: 2026/10/07 18:38:55 by scarlucc         ###   ########.fr       */
+/*   Updated: 2026/10/08 09:44:15 by scarlucc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,15 @@ t_ps_list	*make_lst_from_string(char **argv, t_ps_list *stack_a)
 	int		count;
 
 	split_out = ft_split(argv[1], ' ');
+	if (!split_out)
+		return (NULL);
 	count = 0;
 	while (split_out[count])
 		count++;
-	stack_a = make_lst_from_ints(count, split_out, stack_a);
+	if (count == 0)
+		error_message();
+	else
+		stack_a = make_lst_from_ints(count, split_out, stack_a);
 	count = 0;
 	while (split_out[count])
 		free(split_out[count++]);

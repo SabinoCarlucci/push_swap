@@ -67,10 +67,9 @@ void		rrb(t_ps_list **stack_b);
 void		rrr(t_ps_list **stack_a, t_ps_list **stack_b);
 //checks
 int			check_input_repeat(char **argv);
-//int			check_duplicates(const char *input, const char *input_next);
 int			check_duplicates(t_ps_list	*stack_temp);
 int			check_num(char *arg);
-int			check_limits_int(char *arg);
+int			check_limits_int(char *digits, int negative);
 int			error_message(void);
 //utils
 void		free_list(t_ps_list *stack);
