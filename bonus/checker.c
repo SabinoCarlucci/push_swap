@@ -95,7 +95,12 @@ int	main(int argc, char **argv)
 	else
 		stack_a = make_lst_from_ints((argc - 1), (argv + 1), stack_a);
 	if (!stack_a)
-		exit(1);
+		return (1);
+	if (indexing(stack_a))
+	{
+		free_list(stack_a);
+		return (error_message());
+	}
 	check_moves(&stack_a, &stack_b);
 	free_list(stack_a);
 	stack_a = NULL;
@@ -103,60 +108,3 @@ int	main(int argc, char **argv)
 	stack_b = NULL;
 	return (0);
 }
-
-//main con stampa stack
-/* int	main(int argc, char **argv)
-{
-	t_ps_list	*stack_a;
-	t_ps_list	*stack_b;
-	
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if (argc == 1)
-		return (0);
-	else if (argc == 2)
-		stack_a = make_lst_from_string(argv, stack_a);
-	else
-		stack_a = make_lst_from_ints((argc - 1), (argv + 1), stack_a);
-	if (!stack_a)
-		exit(1);
-	
-	
-	printf("STACK A\n");//cancella prima di consegna
-	print_stack(stack_a);//cancella prima di consegna
-	printf("\n");//cancella prima di consegna
-	
-	//leggi mosse
-	check_moves(&stack_a, &stack_b);
-	
-	printf("\n");//cancella prima di consegna
-	printf("STACK A\n");//cancella prima di consegna
-	print_stack(stack_a);//cancella prima di consegna
-	printf("\n");//cancella prima di consegna
-	
-	printf("STACK B\n");//cancella prima di consegna
-	print_stack(stack_b);//cancella prima di consegna
-	printf("\n");//cancella prima di consegna
-
-	if (stack_b == NULL && already_ordered(stack_a))
-		ft_putstr_fd("OK\n", 1);
-	else
-		ft_putstr_fd("KO\n", 1);
-	
-	free_list(stack_a);
-	stack_a = NULL;
-	free_list(stack_b);
-	stack_b = NULL;
-	return (0);
-} */
-
-/* void	print_stack(t_ps_list *stack)
-{
-	//stack = ft_lstfirst_dl(stack);
-	while (stack)
-	{
-		printf("%i \n", *(stack->content));
-		stack = stack->next;
-	}
-} */

@@ -1,1 +1,5 @@
+*.o
+*.a
+push_swap
+checker
 script/benchmark_results/
